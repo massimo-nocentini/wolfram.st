@@ -4,10 +4,18 @@ Class {
 	#category : #Wolfram
 }
 
+{ #category : #'as yet unclassified' }
+WolframLink >> activate [
+
+	^ self
+		  ffiCall: #( int WSActivate #( void #* handler ) )
+		  module: WolframLibrary
+]
+
 { #category : #expressions }
 WolframLink >> argument: arg [
 
-	^ self head: 'Evaluate' arguments: { arg }
+	^ self head: 'Identity' arguments: { arg }
 ]
 
 { #category : #'as yet unclassified' }
@@ -38,6 +46,14 @@ WolframLink >> head: head arguments: args [
 ]
 
 { #category : #'as yet unclassified' }
+WolframLink >> newPacket [
+
+	^ self
+		  ffiCall: #( int WSNewPacket #( void #* handler ) )
+		  module: WolframLibrary
+]
+
+{ #category : #'as yet unclassified' }
 WolframLink >> nextPacket [
 
 	^ self
@@ -65,7 +81,25 @@ WolframLink >> putFunction: f arity: argc [
 WolframLink >> putInteger: i [
 
 	^ self
-		  ffiCall: #( int WSPutInteger #( void #* handler #, int i ) )
+		  ffiCall: #( int WSPutInteger64 #( void #* handler #, long i ) )
+		  module: WolframLibrary
+]
+
+{ #category : #'as yet unclassified' }
+WolframLink >> putString: s [
+
+	^ self
+		  ffiCall:
+		  #( int WSPutString #( void #* handler #, const char #* s ) )
+		  module: WolframLibrary
+]
+
+{ #category : #'as yet unclassified' }
+WolframLink >> putSymbol: s [
+
+	^ self
+		  ffiCall:
+		  #( int WSPutSymbol #( void #* handler #, const char #* s ) )
 		  module: WolframLibrary
 ]
 
