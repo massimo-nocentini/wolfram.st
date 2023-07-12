@@ -4,31 +4,6 @@ Class {
 	#category : #Wolfram
 }
 
-{ #category : #'as yet unclassified' }
-WolframEnvironment class >> fresh [
-
-	^ self basicNew
-		  handler: self wsenv;
-		  initialize;
-		  yourself
-]
-
-{ #category : #'as yet unclassified' }
-WolframEnvironment class >> wsdeinitialize: handler [
-
-	^ self
-		  ffiCall: #( void WSDeinitialize #( void #* handler ) )
-		  module: WolframLibrary
-]
-
-{ #category : #'as yet unclassified' }
-WolframEnvironment class >> wsenv [
-
-	^ self
-		  ffiCall: #( void #* WSInitialize #( NULL ) )
-		  module: WolframLibrary
-]
-
 { #category : #'instance creation' }
 WolframEnvironment >> newLinkOpenString [
 
@@ -39,11 +14,26 @@ WolframEnvironment >> newLinkOpenString [
 { #category : #'instance creation' }
 WolframEnvironment >> newLinkOpenString: str [
 
-	^ WolframLink environment: self openString: str
+	^ WolframLink basicNew
+		  handler: (self wsOpenString: str);
+		  initialize;
+		  yourself
 ]
 
 { #category : #'as yet unclassified' }
 WolframEnvironment >> releaseHandler [
 
-	self class wsdeinitialize: self handler
+	^ self
+		  ffiCall: #( void WSDeinitialize #( void #* handler ) )
+		  module: WolframLibrary
+]
+
+{ #category : #'as yet unclassified' }
+WolframEnvironment >> wsOpenString: str [
+
+	^ self
+		  ffiCall:
+		  #( void #* WSOpenString #( void #* handler #, const char #* str
+		        #, NULL ) )
+		  module: WolframLibrary
 ]

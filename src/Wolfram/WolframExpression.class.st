@@ -1,29 +1,18 @@
 Class {
 	#name : #WolframExpression,
-	#superclass : #WolframHandleHolder,
+	#superclass : #Object,
 	#instVars : [
 		'head',
-		'arguments'
+		'arguments',
+		'link'
 	],
 	#category : #Wolfram
 }
 
-{ #category : #'as yet unclassified' }
-WolframExpression class >> wsEndPacket: handler [
+{ #category : #visiting }
+WolframExpression >> acceptSlotDescriptorsVisitor: aVisitor [
 
-	^ self
-		  ffiCall: #( int WSEndPacket #( void #* handler ) )
-		  module: WolframLibrary
-]
-
-{ #category : #'as yet unclassified' }
-WolframExpression class >> wsPutFunction: handler name: f arity: argc [
-
-	^ self
-		  ffiCall:
-		  #( int WSPutFunction #( void #* handler #, const char #* f #, int
-		        argc ) )
-		  module: WolframLibrary
+	^ aVisitor visitWolframExpression: self
 ]
 
 { #category : #accessing }
@@ -38,10 +27,27 @@ WolframExpression >> arguments: anObject [
 	arguments := anObject
 ]
 
-{ #category : #converting }
-WolframExpression >> asWolframExpressionInLink: link [
+{ #category : #evaluating }
+WolframExpression >> fullPangoPrintString [
 
-	^ self
+	| liblua |
+	link
+		putFunction: 'ToString' arity: 1;
+		putExpression: self;
+		endPacket.
+
+	liblua := LibLua uniqueInstance.
+
+	^ liblua withOpenedLibsStateDo: [ :L |
+		  liblua on: L assertLUAOK: [
+			  liblua
+				  luaL_requiref: L name: 'wolfram';
+				  on: L push: #wolfram;
+				  lua_getfield: L at: -1 name: 'evaluate';
+				  on: L push: link;
+				  lua_pcall: L nargs: 1 nresults: liblua LUA_MULTRET ].
+
+		  liblua on: L at: -1 ]
 ]
 
 { #category : #accessing }
@@ -56,17 +62,28 @@ WolframExpression >> head: anObject [
 	head := anObject
 ]
 
+{ #category : #accessing }
+WolframExpression >> link: anObject [
+
+	link := anObject
+]
+
+{ #category : #evaluating }
+WolframExpression >> putOnLink: aLink [
+
+	aLink putFunction: self head arity: self arguments size.
+
+	self arguments do: [ :each | each putOnLink: aLink ]
+]
+
 { #category : #evaluating }
 WolframExpression >> value [
 
-	self class wsPutFunction: self handler name: 'FullForm' arity: 1.
-
-	self class
-		wsPutFunction: self handler
-		name: self head
-		arity: self arguments size.
+	link
+		putFunction: 'FullForm' arity: 1;
+		putFunction: self head arity: self arguments size.
 
 	self arguments do: #value.
 
-	self class wsEndPacket: self handler
+	link endPacket
 ]

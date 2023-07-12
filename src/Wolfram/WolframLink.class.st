@@ -4,46 +4,75 @@ Class {
 	#category : #Wolfram
 }
 
-{ #category : #'as yet unclassified' }
-WolframLink class >> environment: ep openString: str [
+{ #category : #expressions }
+WolframLink >> argument: arg [
 
-	^ self basicNew
-		  handler: (self wsopen: ep handler string: str);
-		  initialize;
-		  yourself
+	^ self head: 'Evaluate' arguments: { arg }
 ]
 
 { #category : #'as yet unclassified' }
-WolframLink class >> wsclose: handler [
+WolframLink >> endPacket [
 
 	^ self
-		  ffiCall: #( void WSClose #( void #* handler ) )
+		  ffiCall: #( int WSEndPacket #( void #* handler ) )
 		  module: WolframLibrary
 ]
 
 { #category : #'as yet unclassified' }
-WolframLink class >> wsopen: ep string: str [
+WolframLink >> flush [
 
 	^ self
-		  ffiCall:
-		  #( void #* WSOpenString #( void #* ep #, const char #* str #, NULL ) )
+		  ffiCall: #( int WSFlush #( void #* handler ) )
 		  module: WolframLibrary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #expressions }
 WolframLink >> head: head arguments: args [
 
 	^ WolframExpression basicNew
-		  handler: self handler;
+		  link: self;
 		  head: head;
-		  arguments:
-			  (args collect: [ :arg | arg asWolframExpressionInLink: self ]);
+		  arguments: args;
 		  initialize;
 		  yourself
+]
+
+{ #category : #'as yet unclassified' }
+WolframLink >> nextPacket [
+
+	^ self
+		  ffiCall: #( int WSNextPacket #( void #* handler ) )
+		  module: WolframLibrary
+]
+
+{ #category : #'as yet unclassified' }
+WolframLink >> putExpression: exp [
+
+	^ exp putOnLink: self
+]
+
+{ #category : #'as yet unclassified' }
+WolframLink >> putFunction: f arity: argc [
+
+	^ self
+		  ffiCall:
+		  #( int WSPutFunction #( void #* handler #, const char #* f #, int
+		        argc ) )
+		  module: WolframLibrary
+]
+
+{ #category : #'as yet unclassified' }
+WolframLink >> putInteger: i [
+
+	^ self
+		  ffiCall: #( int WSPutInteger #( void #* handler #, int i ) )
+		  module: WolframLibrary
 ]
 
 { #category : #'as yet unclassified' }
 WolframLink >> releaseHandler [
 
-	self class wsclose: self handler
+	^ self
+		  ffiCall: #( void WSClose #( void #* handler ) )
+		  module: WolframLibrary
 ]

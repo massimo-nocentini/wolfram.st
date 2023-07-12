@@ -19,8 +19,14 @@ WolframHandleHolder >> handler: anObject [
 	handler := anObject
 ]
 
+{ #category : #dispatched }
+WolframHandleHolder >> pushOnLua: L liblua: liblua [
+
+	^ self handler pushOnLua: L liblua: liblua
+]
+
 { #category : #'as yet unclassified' }
 WolframHandleHolder >> releaseHandler [
 
-	self subclassResponsibility
+	handler := nil
 ]
