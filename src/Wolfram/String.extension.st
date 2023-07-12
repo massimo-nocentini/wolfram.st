@@ -3,5 +3,5 @@ Extension { #name : #String }
 { #category : #'*Wolfram' }
 String >> putOnLink: link [
 
-	^ link putString: self asString
+	^ link putSymbol: self asString
 ]

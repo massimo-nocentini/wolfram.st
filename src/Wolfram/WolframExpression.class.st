@@ -46,7 +46,7 @@ WolframExpression >> arguments: anObject [
 { #category : #evaluating }
 WolframExpression >> asPdfShape [
 
-	| tmpFileName fileReference retcode last fullName |
+	| tmpFileName fileReference retcode last fullName liblua ret template cmd |
 	fileReference := FileReference
 		                 newTempFilePrefix: 'wolfram-'
 		                 suffix: ''.
@@ -58,22 +58,50 @@ WolframExpression >> asPdfShape [
 	tmpFileName := fullName copyFrom: last + 1 to: fullName size.
 
 	retcode := link
-		           putFunction: 'Export' arity: 2;
-		           putString: fullName , '.tex';
+		           putFunction: 'ToString' arity: 1;
+		           putFunction: 'TeXForm' arity: 1;
 		           putFunction: 'HoldForm' arity: 1;
 		           putExpression: self;
 		           endPacket;
-		           flush;
-		           nextPacket.
+		           flush.
 
-	"[ link nextPacket == 3 ] whileFalse: [ link newPacket ]."
+	liblua := LibLua uniqueInstance.
 
-	LibC runCommand:
-		'pdflatex -output-directory=' , fileReference parent fullName , ' '
-		, fullName , '.tex'.
+	ret := liblua withOpenedLibsStateDo: [ :L |
+		       liblua on: L assertLUAOK: [
+			       liblua
+				       luaL_requiref: L name: 'wolfram';
+				       on: L push: #wolfram;
+				       lua_getfield: L at: -1 name: 'evaluate';
+				       on: L push: link;
+				       lua_pcall: L nargs: 1 nresults: liblua LUA_MULTRET ].
+
+		       liblua on: L at: -1 ].
+
+	template := String streamContents: [ :aStream |
+		            aStream
+			            << '\documentclass[16pt]{standalone}
+\usepackage{mathtools}
+\usepackage{concrete}
+\usepackage{euler}
+\begin{document}
+\(\displaystyle ';
+			            << ret;
+			            << ' \)
+\end{document}' ].
+
+	fileReference writeStreamDo: [ :aStream |
+		aStream << template withUnixLineEndings ].
+
+	cmd := 'pdflatex -output-directory=' , fileReference parent fullName
+	       , ' ' , fullName.
+
+	LibC
+		runCommand: cmd;
+		runCommand: cmd.
 
 	^ RSPdf new
-		  fileReference: (fullName , '.pdf') asFileReference;
+		  fileReference: (fileReference fullName , '.pdf') asFileReference;
 		  yourself
 ]
 
@@ -83,7 +111,7 @@ WolframExpression >> fullPangoPrintString [
 	| liblua |
 	link
 		putFunction: 'TextString' arity: 1;
-		"putFunction: 'TeXForm' arity: 1;"putFunction: 'HoldForm' arity: 1;
+		putFunction: 'HoldForm' arity: 1;
 		putExpression: self;
 		endPacket.
 
