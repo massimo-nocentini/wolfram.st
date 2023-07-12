@@ -6,8 +6,8 @@ CTSlotDescriptorsVisitor >> visitWolframExpression: expr [
 	^ {
 		  (self newSlotDescriptorSelector: #head).
 		  (self newSlotDescriptorSelector: #arguments).
-		  (self newSlotDescriptorSelector: #fullPangoPrintString).
-		  ((self newSlotDescriptorSelector: #asPdfShape)
+		  (self newSlotDescriptorSelector: #asMathematicaPrintString).
+		  ((self newSlotDescriptorSelector: #asTeXifiedShape)
 			   inline;
 			   quote) }
 ]

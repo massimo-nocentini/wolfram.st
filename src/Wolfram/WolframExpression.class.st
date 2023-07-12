@@ -44,7 +44,31 @@ WolframExpression >> arguments: anObject [
 ]
 
 { #category : #evaluating }
-WolframExpression >> asPdfShape [
+WolframExpression >> asMathematicaPrintString [
+
+	| liblua |
+	link
+		putFunction: 'TextString' arity: 1;
+		putFunction: 'HoldForm' arity: 1;
+		putExpression: self;
+		endPacket.
+
+	liblua := LibLua uniqueInstance.
+
+	^ liblua withOpenedLibsStateDo: [ :L |
+		  liblua on: L assertLUAOK: [
+			  liblua
+				  luaL_requiref: L name: 'wolfram';
+				  on: L push: #wolfram;
+				  lua_getfield: L at: -1 name: 'evaluate';
+				  on: L push: link;
+				  lua_pcall: L nargs: 1 nresults: liblua LUA_MULTRET ].
+
+		  liblua on: L at: -1 ]
+]
+
+{ #category : #evaluating }
+WolframExpression >> asTeXifiedShape [
 
 	| tmpFileName fileReference retcode last fullName liblua ret template cmd |
 	fileReference := FileReference
@@ -80,7 +104,7 @@ WolframExpression >> asPdfShape [
 
 	template := String streamContents: [ :aStream |
 		            aStream
-			            << '\documentclass[16pt]{standalone}
+			            << '\documentclass[12pt]{standalone}
 \usepackage{mathtools}
 \usepackage{concrete}
 \usepackage{euler}
@@ -103,30 +127,6 @@ WolframExpression >> asPdfShape [
 	^ RSPdf new
 		  fileReference: (fileReference fullName , '.pdf') asFileReference;
 		  yourself
-]
-
-{ #category : #evaluating }
-WolframExpression >> fullPangoPrintString [
-
-	| liblua |
-	link
-		putFunction: 'TextString' arity: 1;
-		putFunction: 'HoldForm' arity: 1;
-		putExpression: self;
-		endPacket.
-
-	liblua := LibLua uniqueInstance.
-
-	^ liblua withOpenedLibsStateDo: [ :L |
-		  liblua on: L assertLUAOK: [
-			  liblua
-				  luaL_requiref: L name: 'wolfram';
-				  on: L push: #wolfram;
-				  lua_getfield: L at: -1 name: 'evaluate';
-				  on: L push: link;
-				  lua_pcall: L nargs: 1 nresults: liblua LUA_MULTRET ].
-
-		  liblua on: L at: -1 ]
 ]
 
 { #category : #accessing }
