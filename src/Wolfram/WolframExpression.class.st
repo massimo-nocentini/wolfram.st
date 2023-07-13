@@ -44,6 +44,12 @@ WolframExpression >> arguments: anObject [
 ]
 
 { #category : #evaluating }
+WolframExpression >> asDefaultShapeForWalker: walker [
+
+	^ self asTeXifiedShape
+]
+
+{ #category : #evaluating }
 WolframExpression >> asMathematicaPrintString [
 
 	| liblua |
@@ -125,6 +131,7 @@ WolframExpression >> asTeXifiedShape [
 		runCommand: cmd.
 
 	^ RSPdf new
+		  model: self;
 		  fileReference: (fileReference fullName , '.pdf') asFileReference;
 		  yourself
 ]

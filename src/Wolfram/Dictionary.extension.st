@@ -5,9 +5,13 @@ Dictionary >> reifyWolframExpressionOnLink: link [
 
 	| args head |
 	head := self at: #head.
+	args := self at: #arguments.
 
-	args := (self at: #arguments) collect: [ :arg |
-		        arg reifyWolframExpressionOnLink: link ].
-
-	^ link head: head arguments: args
+	^ head = 'Symbol'
+		  ifTrue: [ args first asSymbol ]
+		  ifFalse: [
+			  link
+				  head: head
+				  arguments:
+				  (args collect: [ :arg | arg reifyWolframExpressionOnLink: link ]) ]
 ]

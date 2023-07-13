@@ -5,6 +5,12 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+WolframLink >> acceptSlotDescriptorsVisitor: visitor [
+
+	^ visitor visitWolframLink: self
+]
+
+{ #category : #'as yet unclassified' }
 WolframLink >> activate [
 
 	^ self
@@ -46,6 +52,14 @@ WolframLink >> head: head arguments: args [
 ]
 
 { #category : #'as yet unclassified' }
+WolframLink >> name [
+
+	^ self
+		  ffiCall: #( const char #* WSLinkName #( void #* handler ) )
+		  module: WolframLibrary
+]
+
+{ #category : #'as yet unclassified' }
 WolframLink >> newPacket [
 
 	^ self
@@ -65,6 +79,14 @@ WolframLink >> nextPacket [
 WolframLink >> putExpression: exp [
 
 	^ exp putOnLink: self
+]
+
+{ #category : #'as yet unclassified' }
+WolframLink >> putFloat: i [
+
+	^ self
+		  ffiCall: #( int WSPutReal #( void #* handler #, double i ) )
+		  module: WolframLibrary
 ]
 
 { #category : #'as yet unclassified' }
