@@ -24,6 +24,15 @@ WolframLink >> argument: arg [
 	^ self head: 'Identity' arguments: { arg }
 ]
 
+{ #category : #'reflective operations' }
+WolframLink >> doesNotUnderstand: message [
+
+	^ message numArgs = 1
+		  ifTrue: [
+		  self head: message selector allButLast arguments: message argument ]
+		  ifFalse: [ super doesNotUnderstand: message ]
+]
+
 { #category : #'as yet unclassified' }
 WolframLink >> endPacket [
 
@@ -86,6 +95,16 @@ WolframLink >> putFloat: i [
 
 	^ self
 		  ffiCall: #( int WSPutReal #( void #* handler #, double i ) )
+		  module: WolframLibrary
+]
+
+{ #category : #'as yet unclassified' }
+WolframLink >> putFloatAsString: s [
+
+	^ self
+		  ffiCall:
+		  #( int WSPutRealNumberAsString #( void #* handler #, const char
+		        #* s ) )
 		  module: WolframLibrary
 ]
 
