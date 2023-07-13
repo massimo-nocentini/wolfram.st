@@ -4,6 +4,12 @@ Class {
 	#category : #Wolfram
 }
 
+{ #category : #expressions }
+WolframLink >> > anObject [
+
+	^ self head: 'ToExpression' arguments: { anObject asString }
+]
+
 { #category : #'as yet unclassified' }
 WolframLink >> acceptSlotDescriptorsVisitor: visitor [
 
@@ -21,7 +27,7 @@ WolframLink >> activate [
 { #category : #expressions }
 WolframLink >> argument: arg [
 
-	^ self head: 'Identity' arguments: { arg }
+	^ self head: 'InputForm' arguments: { arg }
 ]
 
 { #category : #'reflective operations' }
@@ -150,4 +156,10 @@ WolframLink >> releaseHandler [
 	^ self
 		  ffiCall: #( void WSClose #( void #* handler ) )
 		  module: WolframLibrary
+]
+
+{ #category : #expressions }
+WolframLink >> | arg [
+
+	^ self argument: arg
 ]

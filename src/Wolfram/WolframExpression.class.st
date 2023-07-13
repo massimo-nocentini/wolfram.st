@@ -10,6 +10,14 @@ Class {
 }
 
 { #category : #visiting }
+WolframExpression >> * exp [
+
+	^ link head: 'Times' arguments: {
+			  self.
+			  exp }
+]
+
+{ #category : #visiting }
 WolframExpression >> ** exp [
 
 	^ link head: 'Power' arguments: {
@@ -18,9 +26,25 @@ WolframExpression >> ** exp [
 ]
 
 { #category : #visiting }
+WolframExpression >> + exp [
+
+	^ link head: 'Plus' arguments: {
+			  self.
+			  exp }
+]
+
+{ #category : #visiting }
 WolframExpression >> - exp [
 
-	^ link head: 'Minus' arguments: {
+	^ link head: 'Subtract' arguments: {
+			  self.
+			  exp }
+]
+
+{ #category : #visiting }
+WolframExpression >> / exp [
+
+	^ link head: 'Divide' arguments: {
 			  self.
 			  exp }
 ]
@@ -136,6 +160,12 @@ WolframExpression >> asTeXifiedShape [
 		  yourself
 ]
 
+{ #category : #evaluating }
+WolframExpression >> evaluate [
+
+	^ self -> self value
+]
+
 { #category : #accessing }
 WolframExpression >> head [
 
@@ -146,6 +176,12 @@ WolframExpression >> head [
 WolframExpression >> head: anObject [
 
 	head := anObject
+]
+
+{ #category : #testing }
+WolframExpression >> isWolframExpression [
+
+	^ true
 ]
 
 { #category : #accessing }
