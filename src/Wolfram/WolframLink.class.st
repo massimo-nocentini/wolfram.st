@@ -5,9 +5,9 @@ Class {
 }
 
 { #category : #expressions }
-WolframLink >> > anObject [
+WolframLink >> ! anObject [
 
-	^ self head: 'ToExpression' arguments: { anObject asString }
+	^ self head: 'ToExpression' arguments: { anObject  }
 ]
 
 { #category : #'as yet unclassified' }
@@ -24,16 +24,10 @@ WolframLink >> activate [
 		  module: WolframLibrary
 ]
 
-{ #category : #expressions }
-WolframLink >> argument: arg [
-
-	^ self head: 'InputForm' arguments: { arg }
-]
-
 { #category : #'reflective operations' }
 WolframLink >> doesNotUnderstand: message [
 
-	^ message numArgs = 1
+	^ (message numArgs = 1 and: [ message argument isCollection ])
 		  ifTrue: [
 		  self head: message selector allButLast arguments: message argument ]
 		  ifFalse: [ super doesNotUnderstand: message ]
@@ -156,10 +150,4 @@ WolframLink >> releaseHandler [
 	^ self
 		  ffiCall: #( void WSClose #( void #* handler ) )
 		  module: WolframLibrary
-]
-
-{ #category : #expressions }
-WolframLink >> | arg [
-
-	^ self argument: arg
 ]

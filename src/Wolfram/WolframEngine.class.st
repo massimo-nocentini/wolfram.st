@@ -1,16 +1,33 @@
 Class {
 	#name : #WolframEngine,
 	#superclass : #Object,
+	#classVars : [
+		'Env',
+		'Link'
+	],
 	#category : #Wolfram
 }
 
-{ #category : #'as yet unclassified' }
-WolframEngine class >> newEnvironment [
+{ #category : #accessing }
+WolframEngine class >> link [
 
-	^ WolframEnvironment basicNew
-		  handler: self wsenv;
-		  initialize;
-		  yourself
+	^ (Env isNil or: [ Link isNil ])
+		  ifTrue: [
+			  Env := WolframEnvironment basicNew
+				         handler: self wsenv;
+				         initialize;
+				         yourself.
+
+			  Link := Env newLinkOpenString
+				          activate;
+				          yourself ]
+		  ifFalse: [
+			  Link releaseHandler.
+			  Env releaseHandler.
+
+			  Link := Env := nil.
+
+			  self link ]
 ]
 
 { #category : #'as yet unclassified' }

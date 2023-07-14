@@ -150,14 +150,24 @@ WolframExpression >> asTeXifiedShape [
 	cmd := 'pdflatex -output-directory=' , fileReference parent fullName
 	       , ' ' , fullName.
 
-	LibC
-		runCommand: cmd;
-		runCommand: cmd.
+	LibC runCommand: cmd. ";
+		runCommand: cmd"
 
 	^ RSPdf new
 		  model: self;
 		  fileReference: (fileReference fullName , '.pdf') asFileReference;
 		  yourself
+]
+
+{ #category : #'reflective operations' }
+WolframExpression >> doesNotUnderstand: message [
+
+	^ link
+		  head: (message selector copyReplaceAll: ':' with: String empty)
+		  arguments: (OrderedCollection new
+				   add: self;
+				   addAll: (message arguments flatCollect: #yourself);
+				   yourself)
 ]
 
 { #category : #evaluating }
