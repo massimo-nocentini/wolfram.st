@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'head',
 		'arguments',
-		'link'
+		'link',
+		'showPdfInsteadOfTeX'
 	],
 	#category : #Wolfram
 }
@@ -70,7 +71,29 @@ WolframExpression >> arguments: anObject [
 { #category : #evaluating }
 WolframExpression >> asDefaultShapeForWalker: walker [
 
-	^ self asTeXifiedShape
+	^ showPdfInsteadOfTeX
+		  ifTrue: [ self asExportedPdfShape ]
+		  ifFalse: [ self asTeXifiedShape ]
+]
+
+{ #category : #evaluating }
+WolframExpression >> asExportedPdfShape [
+
+	| fileReference fullName |
+	fileReference := FileReference
+		                 newTempFilePrefix: 'wolfram-'
+		                 suffix: ''.
+
+	fullName := fileReference fullName , '.pdf'.
+
+	(link head: 'Export' arguments: {
+			 fullName.
+			 self }) value.
+
+	^ RSPdf new
+		  model: self;
+		  fileReference: fullName asFileReference;
+		  yourself
 ]
 
 { #category : #evaluating }
@@ -166,7 +189,10 @@ WolframExpression >> doesNotUnderstand: message [
 		  head: (message selector copyReplaceAll: ':' with: String empty)
 		  arguments: (OrderedCollection new
 				   add: self;
-				   addAll: (message arguments flatCollect: #yourself);
+				   addAll: (message arguments flatCollect: [ :arg |
+							    arg isCollection
+								    ifTrue: [ arg ]
+								    ifFalse: [ { arg } ] ]);
 				   yourself)
 ]
 
@@ -188,6 +214,14 @@ WolframExpression >> head: anObject [
 	head := anObject
 ]
 
+{ #category : #initialization }
+WolframExpression >> initialize [
+
+	super initialize.
+
+	showPdfInsteadOfTeX := false
+]
+
 { #category : #testing }
 WolframExpression >> isWolframExpression [
 
@@ -206,6 +240,12 @@ WolframExpression >> putOnLink: aLink [
 	aLink putFunction: self head arity: self arguments size.
 
 	self arguments do: [ :each | each putOnLink: aLink ]
+]
+
+{ #category : #accessing }
+WolframExpression >> showPdfInsteadOfTeX [
+
+	showPdfInsteadOfTeX := true
 ]
 
 { #category : #evaluating }
