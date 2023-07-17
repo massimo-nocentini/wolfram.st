@@ -34,7 +34,8 @@ WolframLink >> doesNotUnderstand: message [
 		  ifTrue: [
 			  WolframSymbolExpression new
 				  link: self;
-				  symbol: selector allButFirst asSymbol;
+				  head: 'Symbol';
+				  arguments: { selector allButFirst asSymbol };
 				  yourself ]
 		  ifFalse: [
 			  (message numArgs = 1 and: [ message argument isCollection ])
