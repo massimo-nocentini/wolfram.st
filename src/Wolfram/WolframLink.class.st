@@ -10,6 +10,12 @@ WolframLink >> ! anObject [
 	^ self head: 'ToExpression' arguments: { anObject  }
 ]
 
+{ #category : #expressions }
+WolframLink >> % anObject [
+
+	^ self head: 'Out' arguments: { anObject }
+]
+
 { #category : #'as yet unclassified' }
 WolframLink >> acceptSlotDescriptorsVisitor: visitor [
 

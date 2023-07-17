@@ -205,15 +205,9 @@ WolframExpression >> asTeXifiedShape [
 
 	template := String streamContents: [ :aStream |
 		            aStream
-			            << '\documentclass[12pt]{standalone}
-\usepackage{mathtools}
-\usepackage{concrete}
-\usepackage{euler}
-\begin{document}
-\(\displaystyle ';
+			            << self standaloneLatexPreamble;
 			            << ret;
-			            << ' \)
-\end{document}' ].
+			            << self standaloneLatexFooter ].
 
 	fileReference writeStreamDo: [ :aStream |
 		aStream << template withUnixLineEndings ].
@@ -293,6 +287,25 @@ WolframExpression >> putOnLink: aLink [
 WolframExpression >> showPdfInsteadOfTeX [
 
 	showPdfInsteadOfTeX := true
+]
+
+{ #category : #evaluating }
+WolframExpression >> standaloneLatexFooter [
+
+	^ ' \)
+\end{document}'
+]
+
+{ #category : #evaluating }
+WolframExpression >> standaloneLatexPreamble [
+
+	^ '\documentclass[12pt]{standalone}
+\usepackage{mathtools}
+\usepackage{concrete}
+\usepackage{euler}
+\usepackage{amssymb}
+\begin{document}
+\(\displaystyle '
 ]
 
 { #category : #evaluating }
