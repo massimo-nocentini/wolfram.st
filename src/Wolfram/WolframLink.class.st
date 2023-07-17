@@ -37,12 +37,7 @@ WolframLink >> doesNotUnderstand: message [
 	selector := message selector.
 
 	^ (selector beginsWith: '_')
-		  ifTrue: [
-			  WolframSymbolExpression new
-				  link: self;
-				  head: 'Symbol';
-				  arguments: { selector allButFirst asSymbol };
-				  yourself ]
+		  ifTrue: [ self symbol: selector allButFirst ]
 		  ifFalse: [
 			  (message numArgs = 1 and: [ message argument isCollection ])
 				  ifTrue: [
@@ -167,4 +162,14 @@ WolframLink >> releaseHandler [
 	^ self
 		  ffiCall: #( void WSClose #( void #* handler ) )
 		  module: WolframLibrary
+]
+
+{ #category : #accessing }
+WolframLink >> symbol: sym [
+
+	^ WolframSymbolExpression new
+		  link: self;
+		  head: 'Symbol';
+		  arguments: { sym asSymbol };
+		  yourself
 ]
