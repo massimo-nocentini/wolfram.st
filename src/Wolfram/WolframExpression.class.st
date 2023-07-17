@@ -83,6 +83,22 @@ WolframExpression >> === exp [
 ]
 
 { #category : #visiting }
+WolframExpression >> @ exp [
+
+	^ link head: 'Indexed' arguments: {
+			  self.
+			  exp }
+]
+
+{ #category : #visiting }
+WolframExpression >> @! exp [
+
+	^ link head: 'Part' arguments: {
+			  self.
+			  exp }
+]
+
+{ #category : #visiting }
 WolframExpression >> acceptSlotDescriptorsVisitor: aVisitor [
 
 	^ aVisitor visitWolframExpression: self
