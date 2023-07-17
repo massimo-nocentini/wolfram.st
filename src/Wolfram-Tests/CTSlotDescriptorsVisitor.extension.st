@@ -4,6 +4,6 @@ Extension { #name : #CTSlotDescriptorsVisitor }
 CTSlotDescriptorsVisitor >> visitTestCaseExecution: exec [
 
 	^ {
-		  (self newSlotDescriptorSelector: #compiledMethod) inline.
+		  (self newSlotDescriptorSelector: #compiledMethod).
 		  (self newSlotDescriptorSelector: #evaluate) }
 ]

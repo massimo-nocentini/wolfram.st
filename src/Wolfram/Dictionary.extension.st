@@ -8,7 +8,7 @@ Dictionary >> reifyWolframExpressionOnLink: link [
 	args := self at: #arguments.
 
 	^ head = '__symbol'
-		  ifTrue: [ link symbol: args first ]
+		  ifTrue: [ link symbol: args first asSymbol ]
 		  ifFalse: [
 			  link
 				  head: head
