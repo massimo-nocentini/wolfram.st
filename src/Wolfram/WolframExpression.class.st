@@ -51,6 +51,14 @@ WolframExpression >> / exp [
 ]
 
 { #category : #visiting }
+WolframExpression >> === exp [
+
+	^ link head: 'Equal' arguments: {
+			  self.
+			  exp }
+]
+
+{ #category : #visiting }
 WolframExpression >> acceptSlotDescriptorsVisitor: aVisitor [
 
 	^ aVisitor visitWolframExpression: self
