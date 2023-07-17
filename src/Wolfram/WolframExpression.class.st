@@ -197,10 +197,9 @@ WolframExpression >> doesNotUnderstand: message [
 		  head: (message selector copyReplaceAll: ':' with: String empty)
 		  arguments: (OrderedCollection new
 				   add: self;
-				   addAll: (message arguments flatCollect: [ :arg |
-							    arg isCollection
-								    ifTrue: [ arg ]
-								    ifFalse: [ { arg } ] ]);
+				   addAll: (message arguments
+						    ifEmpty: [ {  } ]
+						    ifNotEmpty: [ :args | args first ]);
 				   yourself)
 ]
 
