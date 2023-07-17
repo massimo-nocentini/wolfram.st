@@ -8,7 +8,7 @@ Class {
 WolframEnvironment >> newLinkOpenString [
 
 	^ self newLinkOpenString:
-		  'smalltalk -linkmode launch -linkname ''/usr/local/Wolfram/WolframEngine/13.2/Executables/wolfram -wstp -noprompt -noicon'''
+		  'pharo -linkmode launch -linkname ''wolfram -wstp -noprompt -noicon'''
 ]
 
 { #category : #'instance creation' }
