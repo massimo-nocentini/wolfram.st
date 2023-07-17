@@ -11,6 +11,14 @@ Class {
 }
 
 { #category : #visiting }
+WolframExpression >> && exp [
+
+	^ link head: 'And' arguments: {
+			  self.
+			  exp }
+]
+
+{ #category : #visiting }
 WolframExpression >> * exp [
 
 	^ link head: 'Times' arguments: {
