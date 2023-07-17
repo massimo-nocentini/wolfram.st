@@ -51,6 +51,22 @@ WolframExpression >> / exp [
 ]
 
 { #category : #visiting }
+WolframExpression >> /, exp [
+
+	^ link head: 'ReplaceAll' arguments: {
+			  self.
+			  exp }
+]
+
+{ #category : #visiting }
+WolframExpression >> <- exp [
+
+	^ link head: 'Set' arguments: {
+			  self.
+			  exp }
+]
+
+{ #category : #visiting }
 WolframExpression >> === exp [
 
 	^ link head: 'Equal' arguments: {
@@ -198,7 +214,7 @@ WolframExpression >> doesNotUnderstand: message [
 		  arguments: (OrderedCollection new
 				   add: self;
 				   addAll: (message arguments
-						    ifEmpty: [ {  } ]
+						    ifEmpty: [ Array empty ]
 						    ifNotEmpty: [ :args | args first ]);
 				   yourself)
 ]

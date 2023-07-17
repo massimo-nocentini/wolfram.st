@@ -27,10 +27,20 @@ WolframLink >> activate [
 { #category : #'reflective operations' }
 WolframLink >> doesNotUnderstand: message [
 
-	^ (message numArgs = 1 and: [ message argument isCollection ])
+	| selector |
+	selector := message selector.
+
+	^ (selector beginsWith: '_')
 		  ifTrue: [
-		  self head: message selector allButLast arguments: message argument ]
-		  ifFalse: [ super doesNotUnderstand: message ]
+			  WolframSymbolExpression new
+				  link: self;
+				  symbol: selector allButFirst asSymbol;
+				  yourself ]
+		  ifFalse: [
+			  (message numArgs = 1 and: [ message argument isCollection ])
+				  ifTrue: [
+				  self head: selector allButLast arguments: message argument ]
+				  ifFalse: [ super doesNotUnderstand: message ] ]
 ]
 
 { #category : #'as yet unclassified' }
