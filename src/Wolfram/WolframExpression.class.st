@@ -11,6 +11,14 @@ Class {
 }
 
 { #category : #visiting }
+WolframExpression >> ! exp [
+
+	^ link head: 'Indexed' arguments: {
+			  self.
+			  exp }
+]
+
+{ #category : #visiting }
 WolframExpression >> && exp [
 
 	^ link head: 'And' arguments: {
@@ -85,7 +93,7 @@ WolframExpression >> === exp [
 { #category : #visiting }
 WolframExpression >> @ exp [
 
-	^ link head: 'Indexed' arguments: {
+	^ link head: 'Construct' arguments: {
 			  self.
 			  exp }
 ]
@@ -94,6 +102,14 @@ WolframExpression >> @ exp [
 WolframExpression >> @! exp [
 
 	^ link head: 'Part' arguments: {
+			  self.
+			  exp }
+]
+
+{ #category : #visiting }
+WolframExpression >> @* exp [
+
+	^ link head: 'Composition' arguments: {
 			  self.
 			  exp }
 ]
