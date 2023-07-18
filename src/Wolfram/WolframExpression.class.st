@@ -99,6 +99,14 @@ WolframExpression >> @! exp [
 ]
 
 { #category : #visiting }
+WolframExpression >> @@ args [
+
+	^ link head: 'Apply' arguments: {
+			  self.
+			  args }
+]
+
+{ #category : #visiting }
 WolframExpression >> acceptSlotDescriptorsVisitor: aVisitor [
 
 	^ aVisitor visitWolframExpression: self
@@ -304,6 +312,9 @@ WolframExpression >> standaloneLatexPreamble [
 \usepackage{concrete}
 \usepackage{euler}
 \usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\newcommand{\unicode}[1]{.\,}
 \begin{document}
 \(\displaystyle '
 ]
