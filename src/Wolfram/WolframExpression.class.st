@@ -90,6 +90,14 @@ WolframExpression >> === exp [
 			  exp }
 ]
 
+{ #category : #evaluating }
+WolframExpression >> ? args [
+
+	^ (link head: 'Information' arguments: { self } , args)
+		  showPdfInsteadOfTeX;
+		  yourself
+]
+
 { #category : #visiting }
 WolframExpression >> @ exp [
 
@@ -279,6 +287,18 @@ WolframExpression >> head: anObject [
 	head := anObject
 ]
 
+{ #category : #evaluating }
+WolframExpression >> info [
+
+	^ self ? { (link head: 'Rule' arguments: #( LongForm True )) }
+]
+
+{ #category : #evaluating }
+WolframExpression >> infoShort [
+
+	^ self ? { (link head: 'Rule' arguments: #( LongForm False )) }
+]
+
 { #category : #initialization }
 WolframExpression >> initialize [
 
@@ -334,13 +354,13 @@ WolframExpression >> standaloneLatexFooter [
 
 { #category : #evaluating }
 WolframExpression >> standaloneLatexPreamble [
+	"https://tex.stackexchange.com/questions/353943/how-to-paste-a-mathematica-formula-to-the-latex-unicode-included"
 
 	^ '\documentclass[12pt]{standalone}
 \usepackage{mathtools}
 \usepackage{concrete}
 \usepackage{euler}
 \usepackage{amssymb}
-\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{fontspec}
 \newfontfamily{\mathematicamono}{MathematicaMono}
@@ -356,6 +376,16 @@ WolframExpression >> standaloneLatexPreamble [
 \ExplSyntaxOff
 \begin{document}
 \(\displaystyle '
+]
+
+{ #category : #accessing }
+WolframExpression >> usageString [
+
+	^ (link
+		   head: 'ToString'
+		   arguments: { (link head: 'Information' arguments: {
+					    self.
+					    'Usage' }) }) value
 ]
 
 { #category : #evaluating }
