@@ -236,7 +236,7 @@ WolframExpression >> asTeXifiedShape [
 	fileReference writeStreamDo: [ :aStream |
 		aStream << template withUnixLineEndings ].
 
-	cmd := 'pdflatex -output-directory=' , fileReference parent fullName
+	cmd := 'xelatex -output-directory=' , fileReference parent fullName
 	       , ' ' , fullName.
 
 	LibC runCommand: cmd. ";
@@ -300,6 +300,18 @@ WolframExpression >> link: anObject [
 ]
 
 { #category : #evaluating }
+WolframExpression >> printOn: stream [
+
+	super printOn: stream.
+
+	stream
+		<< String space;
+		<< '(';
+		<< self asMathematicaPrintString;
+		<< ')'
+]
+
+{ #category : #evaluating }
 WolframExpression >> putOnLink: aLink [
 
 	aLink putFunction: self head arity: self arguments size.
@@ -330,7 +342,18 @@ WolframExpression >> standaloneLatexPreamble [
 \usepackage{amssymb}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\newcommand{\unicode}[1]{.\,}
+\usepackage{fontspec}
+\newfontfamily{\mathematicamono}{MathematicaMono}
+\ExplSyntaxOn
+\NewDocumentCommand{\mmono}{m}
+ {
+  \text{\mathematicamono#1}
+ }
+\NewDocumentCommand{\unicode}{m}
+ {
+  \mmono { \symbol { \int_from_hex:n { #1 } } }
+ }
+\ExplSyntaxOff
 \begin{document}
 \(\displaystyle '
 ]
