@@ -83,6 +83,12 @@ WolframExpression >> <- exp [
 ]
 
 { #category : #visiting }
+WolframExpression >> <-| exp [
+
+	^ exp |-> self
+]
+
+{ #category : #visiting }
 WolframExpression >> === exp [
 
 	^ link head: 'Equal' arguments: {
@@ -410,4 +416,12 @@ WolframExpression >> value [
 		       liblua on: L at: -1 ].
 
 	^ ret reifyWolframExpressionOnLink: link
+]
+
+{ #category : #visiting }
+WolframExpression >> |-> exp [
+
+	^ link head: 'Function' arguments: {
+			  self.
+			  exp }
 ]
