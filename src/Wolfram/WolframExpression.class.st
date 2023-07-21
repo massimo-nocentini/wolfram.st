@@ -155,7 +155,7 @@ WolframExpression >> arguments: anObject [
 ]
 
 { #category : #evaluating }
-WolframExpression >> asDefaultShapeForWalker: walker [
+WolframExpression >> asDefaultShapeForWalker: walker descriptor: descriptor [
 
 	^ showPdfInsteadOfTeX
 		  ifTrue: [ self asExportedPdfShape ]
