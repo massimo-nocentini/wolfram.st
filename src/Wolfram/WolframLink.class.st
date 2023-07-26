@@ -16,6 +16,18 @@ WolframLink >> % anObject [
 	^ self head: 'Out' arguments: { anObject }
 ]
 
+{ #category : #expressions }
+WolframLink >> << anObject [
+
+	^ self head: 'Identity' arguments: { anObject }
+]
+
+{ #category : #operations }
+WolframLink >> @ i [
+
+	^ self head: 'Slot' arguments: { i }
+]
+
 { #category : #'as yet unclassified' }
 WolframLink >> acceptSlotDescriptorsVisitor: visitor [
 
