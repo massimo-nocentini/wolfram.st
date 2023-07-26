@@ -289,6 +289,14 @@ WolframExpression >> evaluate [
 	^ self -> self value
 ]
 
+{ #category : #converting }
+WolframExpression >> graphics2D [
+
+	^ (link head: 'Graphics' arguments: { self })
+		  showPdfInsteadOfTeX;
+		  yourself
+]
+
 { #category : #accessing }
 WolframExpression >> head [
 
