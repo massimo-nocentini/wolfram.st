@@ -19,6 +19,15 @@ WolframExpression >> ! exp [
 ]
 
 { #category : #visiting }
+WolframExpression >> & recvBlock [
+
+	| f |
+	f := link head: 'Function' arguments: { self }.
+
+	^ recvBlock value: f
+]
+
+{ #category : #visiting }
 WolframExpression >> && exp [
 
 	^ link head: 'And' arguments: {
@@ -70,6 +79,14 @@ WolframExpression >> / exp [
 WolframExpression >> /, exp [
 
 	^ link head: 'ReplaceAll' arguments: {
+			  self.
+			  exp }
+]
+
+{ #category : #visiting }
+WolframExpression >> /@ exp [
+
+	^ link head: 'Map' arguments: {
 			  self.
 			  exp }
 ]

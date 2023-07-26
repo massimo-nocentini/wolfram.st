@@ -76,6 +76,8 @@ WolframLink >> flush [
 { #category : #expressions }
 WolframLink >> head: head arguments: args [
 
+	head isSymbol ifTrue: [ Error signal: 'A String object is required.' ].
+
 	^ WolframExpression basicNew
 		  link: self;
 		  head: head;
@@ -165,6 +167,26 @@ WolframLink >> putSymbol: s [
 	^ self
 		  ffiCall:
 		  #( int WSPutSymbol #( void #* handler #, const char #* s ) )
+		  module: WolframLibrary
+]
+
+{ #category : #'as yet unclassified' }
+WolframLink >> putUTF8String: s len: l [
+
+	^ self
+		  ffiCall:
+			  #( int WSPutUTF8String #( void #* handler #, const char #* s #,
+			        int l ) )
+		  module: WolframLibrary
+]
+
+{ #category : #'as yet unclassified' }
+WolframLink >> putUTF8Symbol: s len: l [
+
+	^ self
+		  ffiCall:
+			  #( int WSPutUTF8Symbol #( void #* handler #, const char #* s #,
+			        int l ) )
 		  module: WolframLibrary
 ]
 
