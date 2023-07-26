@@ -1,6 +1,13 @@
 Extension { #name : #Dictionary }
 
 { #category : #'*Wolfram' }
+Dictionary >> putOnLink: aLink [
+
+	(aLink head: 'Association' arguments: self associations) putOnLink:
+		aLink
+]
+
+{ #category : #'*Wolfram' }
 Dictionary >> reifyWolframExpressionOnLink: link [
 
 	| args head |
