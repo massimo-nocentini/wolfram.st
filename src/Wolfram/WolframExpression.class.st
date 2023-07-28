@@ -199,7 +199,11 @@ WolframExpression >> asExportedPdfShape [
 
 	(link head: 'Export' arguments: {
 			 fullName.
-			 self }) value.
+			 "			 (link head: 'Style' arguments: {
+					  self.
+					  (#PrivateFontOptions -> { ('OperatorSubstitution' -> #False) }) })."
+			 self.
+			 'PDF' }) value.
 
 	^ RSPdf new
 		  model: self;
@@ -215,7 +219,8 @@ WolframExpression >> asMathematicaPrintString [
 		putFunction: 'TextString' arity: 1;
 		putFunction: 'HoldForm' arity: 1;
 		putExpression: self;
-		endPacket.
+		endPacket;
+		flush.
 
 	liblua := LibLua uniqueInstance.
 
@@ -234,56 +239,36 @@ WolframExpression >> asMathematicaPrintString [
 { #category : #evaluating }
 WolframExpression >> asTeXifiedShape [
 
-	| tmpFileName fileReference retcode last fullName liblua ret template cmd |
-	fileReference := FileReference
-		                 newTempFilePrefix: 'wolfram-'
-		                 suffix: ''.
-
-	fullName := fileReference fullName.
-
-	last := fullName lastIndexOf: $/.
-
-	tmpFileName := fullName copyFrom: last + 1 to: fullName size.
-
-	retcode := link
-		           putFunction: 'ToString' arity: 1;
-		           putFunction: 'TeXForm' arity: 1;
-		           putFunction: 'HoldForm' arity: 1;
-		           putExpression: self;
-		           endPacket;
-		           flush.
+	| liblua texContent texChunk |
+	link
+		putFunction: 'ToString' arity: 1;
+		putFunction: 'TeXForm' arity: 1;
+		putFunction: 'HoldForm' arity: 1;
+		putExpression: self;
+		endPacket;
+		flush.
 
 	liblua := LibLua uniqueInstance.
 
-	ret := liblua withOpenedLibsStateDo: [ :L |
-		       liblua on: L assertLUAOK: [
-			       liblua
-				       luaL_requiref: L name: 'wolfram';
-				       on: L push: #wolfram;
-				       lua_getfield: L at: -1 name: 'evaluate';
-				       on: L push: link;
-				       lua_pcall: L nargs: 1 nresults: liblua LUA_MULTRET ].
+	texChunk := liblua withOpenedLibsStateDo: [ :L |
+		            liblua on: L assertLUAOK: [
+			            liblua
+				            luaL_requiref: L name: 'wolfram';
+				            on: L push: #wolfram;
+				            lua_getfield: L at: -1 name: 'evaluate';
+				            on: L push: link;
+				            lua_pcall: L nargs: 1 nresults: liblua LUA_MULTRET ].
 
-		       liblua on: L at: -1 ].
+		            liblua on: L at: -1 ].
 
-	template := String streamContents: [ :aStream |
-		            aStream
-			            << self standaloneLatexPreamble;
-			            << ret;
-			            << self standaloneLatexFooter ].
+	texContent := String streamContents: [ :aStream |
+		              aStream
+			              << self standaloneLatexPreamble;
+			              << texChunk;
+			              << self standaloneLatexFooter ].
 
-	fileReference writeStreamDo: [ :aStream |
-		aStream << template withUnixLineEndings ].
-
-	cmd := 'xelatex -output-directory=' , fileReference parent fullName
-	       , ' ' , fullName.
-
-	LibC runCommand: cmd. ";
-		runCommand: cmd"
-
-	^ RSPdf new
+	^ (RSPdf compileTeX: texContent times: 1)
 		  model: self;
-		  fileReference: (fileReference fullName , '.pdf') asFileReference;
 		  yourself
 ]
 
@@ -433,7 +418,8 @@ WolframExpression >> value [
 	| liblua ret |
 	link
 		putExpression: self;
-		endPacket.
+		endPacket;
+		flush.
 
 	liblua := LibLua uniqueInstance.
 
