@@ -261,11 +261,8 @@ WolframExpression >> asTeXifiedShape [
 
 		            liblua on: L at: -1 ].
 
-	texContent := String streamContents: [ :aStream |
-		              aStream
-			              << self standaloneLatexPreamble;
-			              << texChunk;
-			              << self standaloneLatexFooter ].
+	texContent := self withStandaloneLaTeXStreamDo: [ :aStream |
+		              aStream << texChunk ].
 
 	^ (RSPdf compileTeX: texContent times: 1)
 		  model: self;
@@ -435,6 +432,15 @@ WolframExpression >> value [
 		       liblua on: L at: -1 ].
 
 	^ ret reifyWolframExpressionOnLink: link
+]
+
+{ #category : #evaluating }
+WolframExpression >> withStandaloneLaTeXStreamDo: block [
+
+	^ String streamContents: [ :aStream |
+		  aStream << self standaloneLatexPreamble.
+		  block value: aStream.
+		  aStream << self standaloneLatexFooter ]
 ]
 
 { #category : #visiting }
