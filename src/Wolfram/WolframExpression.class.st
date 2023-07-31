@@ -414,6 +414,7 @@ WolframExpression >> value [
 
 	| liblua ret |
 	link
+		putFunction: 'EvaluatePacket' arity: 1;
 		putExpression: self;
 		endPacket;
 		flush.
