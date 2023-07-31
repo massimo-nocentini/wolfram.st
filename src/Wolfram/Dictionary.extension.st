@@ -17,8 +17,15 @@ Dictionary >> reifyWolframExpressionOnLink: link [
 	^ head = '__symbol'
 		  ifTrue: [ link symbol: args first asSymbol ]
 		  ifFalse: [
-			  link
-				  head: head
-				  arguments:
-				  (args collect: [ :arg | arg reifyWolframExpressionOnLink: link ]) ]
+			  head = '__arbitrary_precision_number'
+				  ifTrue: [
+					  link
+						  arbitraryPrecisionNumber: args first
+						  head: args second asSymbol ]
+				  ifFalse: [
+					  link
+						  head: head
+						  arguments:
+						  (args collect: [ :arg |
+							   arg reifyWolframExpressionOnLink: link ]) ] ]
 ]

@@ -1,20 +1,12 @@
 Class {
 	#name : #WolframArbitraryPrecisionFloat,
-	#superclass : #Object,
-	#instVars : [
-		'definition'
-	],
+	#superclass : #WolframExpression,
 	#category : #Wolfram
 }
 
-{ #category : #accessing }
-WolframArbitraryPrecisionFloat >> definition: anObject [
-
-	definition := anObject
-]
-
 { #category : #evaluating }
-WolframArbitraryPrecisionFloat >> putOnLink: link [
+WolframArbitraryPrecisionFloat >> putOnLink: alink [
 
-	link putFloatAsString: definition
+	(alink head: 'ToExpression' arguments: self arguments) putOnLink:
+		alink
 ]

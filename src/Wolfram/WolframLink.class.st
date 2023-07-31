@@ -42,6 +42,16 @@ WolframLink >> activate [
 		  module: WolframLibrary
 ]
 
+{ #category : #'as yet unclassified' }
+WolframLink >> arbitraryPrecisionNumber: numberAsString head: head [
+
+	^ WolframArbitraryPrecisionFloat new
+		  head: head asSymbol;
+		  arguments: { numberAsString };
+		  link: self;
+		  yourself
+]
+
 { #category : #'reflective operations' }
 WolframLink >> doesNotUnderstand: message [
 
@@ -111,6 +121,16 @@ WolframLink >> nextPacket [
 ]
 
 { #category : #'as yet unclassified' }
+WolframLink >> putArbitraryPrecisionNumber: s [
+
+	^ self
+		  ffiCall:
+		  #( int WSPutRealNumberAsString #( void #* handler #, const char
+		        #* s ) )
+		  module: WolframLibrary
+]
+
+{ #category : #'as yet unclassified' }
 WolframLink >> putExpression: exp [
 
 	^ exp putOnLink: self
@@ -121,16 +141,6 @@ WolframLink >> putFloat: i [
 
 	^ self
 		  ffiCall: #( int WSPutReal #( void #* handler #, double i ) )
-		  module: WolframLibrary
-]
-
-{ #category : #'as yet unclassified' }
-WolframLink >> putFloatAsString: s [
-
-	^ self
-		  ffiCall:
-		  #( int WSPutRealNumberAsString #( void #* handler #, const char
-		        #* s ) )
 		  module: WolframLibrary
 ]
 
