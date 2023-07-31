@@ -19,9 +19,7 @@ Dictionary >> reifyWolframExpressionOnLink: link [
 		  ifFalse: [
 			  head = '__arbitrary_precision_number'
 				  ifTrue: [
-					  link
-						  arbitraryPrecisionNumber: args first
-						  head: args second asSymbol ]
+				  link arbitraryPrecisionNumber: args first headIsInteger: args second ]
 				  ifFalse: [
 					  link
 						  head: head

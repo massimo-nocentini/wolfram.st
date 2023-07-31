@@ -43,10 +43,20 @@ WolframLink >> activate [
 ]
 
 { #category : #'as yet unclassified' }
-WolframLink >> arbitraryPrecisionNumber: numberAsString head: head [
+WolframLink >> arbitraryPrecisionNumber: numberAsString headIsInteger: bool [
 
-	^ WolframArbitraryPrecisionFloat new
-		  head: head asSymbol;
+	| expr |
+	expr := bool
+		        ifTrue: [
+			        WolframArbitraryPrecisionInteger new
+				        head: 'Integer';
+				        yourself ]
+		        ifFalse: [
+			        WolframArbitraryPrecisionReal new
+				        head: 'Real';
+				        yourself ].
+
+	^ expr
 		  arguments: { numberAsString };
 		  link: self;
 		  yourself
