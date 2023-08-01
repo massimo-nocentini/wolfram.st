@@ -199,10 +199,10 @@ WolframExpression >> asExportedPdfShape [
 
 	(link head: 'Export' arguments: {
 			 fullName.
-			 "			 (link head: 'Style' arguments: {
+			 (link head: 'Style' arguments: {
 					  self.
-					  (#PrivateFontOptions -> { ('OperatorSubstitution' -> #False) }) })."
-			 self.
+					  (#FontFamily -> 'Source Sans Pro') }).
+			 "self."
 			 'PDF' }) value.
 
 	^ RSPdf new

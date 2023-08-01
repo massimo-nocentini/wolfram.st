@@ -11,6 +11,7 @@ WolframArbitraryPrecisionReal >> asTeXifiedShape [
 	link
 		putFunction: 'ToString' arity: 1;
 		putFunction: 'TeXForm' arity: 1;
+		putFunction: 'ScientificForm' arity: 1;
 		putExpression: self;
 		"putExpression: (link head: 'Rule' arguments: #( NumberMarks
 				    False ));"
