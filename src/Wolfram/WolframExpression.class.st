@@ -161,6 +161,12 @@ WolframExpression >> @@ args [
 			  args }
 ]
 
+{ #category : #accessing }
+WolframExpression >> _ [
+
+	^ self pattern: link _
+]
+
 { #category : #visiting }
 WolframExpression >> acceptSlotDescriptorsVisitor: aVisitor [
 
@@ -338,6 +344,14 @@ WolframExpression >> isWolframExpression [
 WolframExpression >> link: anObject [
 
 	link := anObject
+]
+
+{ #category : #accessing }
+WolframExpression >> pattern: expr [
+
+	^ link head: 'Pattern' arguments: {
+			  self.
+			  expr }
 ]
 
 { #category : #evaluating }

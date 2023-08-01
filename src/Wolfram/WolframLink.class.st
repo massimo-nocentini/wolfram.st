@@ -28,6 +28,12 @@ WolframLink >> @ i [
 	^ self head: 'Slot' arguments: { i }
 ]
 
+{ #category : #expressions }
+WolframLink >> _ [
+
+	^ self head: 'Blank' arguments: {  }
+]
+
 { #category : #'as yet unclassified' }
 WolframLink >> acceptSlotDescriptorsVisitor: visitor [
 
