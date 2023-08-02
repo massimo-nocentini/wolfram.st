@@ -6,8 +6,9 @@ Class {
 
 { #category : #expressions }
 WolframLink >> ! anObject [
+	"https://reference.wolfram.com/language/ref/ToExpression.html"
 
-	^ self head: 'ToExpression' arguments: { anObject  }
+	^ (self head: 'ToExpression' arguments: { anObject }) value
 ]
 
 { #category : #expressions }
@@ -24,6 +25,7 @@ WolframLink >> << anObject [
 
 { #category : #operations }
 WolframLink >> @ i [
+	"From the [official documentation](https://reference.wolfram.com/language/ref/Slot.html)"
 
 	^ self head: 'Slot' arguments: { i }
 ]

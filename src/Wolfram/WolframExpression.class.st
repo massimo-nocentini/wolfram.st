@@ -13,9 +13,7 @@ Class {
 { #category : #visiting }
 WolframExpression >> ! exp [
 
-	^ link head: 'Construct' arguments: {
-			  self.
-			  exp }
+	^ self valueWithArguments: { exp }
 ]
 
 { #category : #visiting }
@@ -447,6 +445,12 @@ WolframExpression >> value [
 		       liblua on: L at: -1 ].
 
 	^ ret reifyWolframExpressionOnLink: link
+]
+
+{ #category : #visiting }
+WolframExpression >> valueWithArguments: args [
+
+	^ (link head: 'Construct' arguments: { self } , args) value
 ]
 
 { #category : #evaluating }
