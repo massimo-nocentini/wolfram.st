@@ -194,7 +194,7 @@ WolframExpression >> asDefaultShapeForWalker: walker descriptor: descriptor [
 { #category : #evaluating }
 WolframExpression >> asExportedPdfShape [
 
-	| fileReference fullName |
+	| fileReference fullName shape |
 	fileReference := FileReference
 		                 newTempFilePrefix: 'wolfram-'
 		                 suffix: ''.
@@ -209,9 +209,14 @@ WolframExpression >> asExportedPdfShape [
 			 "self."
 			 'PDF' }) value.
 
-	^ RSPdf new
+	shape := (RSPdf new
+		          fileReference: fullName asFileReference;
+		          pages)
+		         ifEmpty: [ RSComposite new ]
+		         ifNotEmpty: [ :pages | pages first ].
+
+	^ shape
 		  model: self;
-		  fileReference: fullName asFileReference;
 		  yourself
 ]
 
@@ -243,7 +248,7 @@ WolframExpression >> asMathematicaPrintString [
 { #category : #evaluating }
 WolframExpression >> asTeXifiedShape [
 
-	| liblua texContent texChunk |
+	| liblua texContent texChunk shape |
 	link
 		putFunction: 'ToString' arity: 1;
 		putFunction: 'TeXForm' arity: 1;
@@ -268,7 +273,11 @@ WolframExpression >> asTeXifiedShape [
 	texContent := self withStandaloneLaTeXStreamDo: [ :aStream |
 		              aStream << texChunk ].
 
-	^ (RSPdf compileTeX: texContent times: 1)
+	shape := (RSPdf compileTeX: texContent times: 1) pages
+		         ifEmpty: [ RSComposite new ]
+		         ifNotEmpty: [ :pages | pages first ].
+
+	^ shape
 		  model: self;
 		  yourself
 ]
