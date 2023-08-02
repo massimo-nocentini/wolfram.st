@@ -119,6 +119,14 @@ WolframExpression >> => exp [
 			  exp }
 ]
 
+{ #category : #visiting }
+WolframExpression >> > exp [
+
+	^ link head: 'Greater' arguments: {
+			  self.
+			  exp }
+]
+
 { #category : #evaluating }
 WolframExpression >> ? args [
 
