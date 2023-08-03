@@ -13,7 +13,7 @@ Class {
 { #category : #visiting }
 WolframExpression >> ! exp [
 
-	^ self valueWithArguments: { exp }
+	^ (self valueWithArguments: { exp }) value
 ]
 
 { #category : #visiting }
@@ -467,7 +467,7 @@ WolframExpression >> value [
 { #category : #visiting }
 WolframExpression >> valueWithArguments: args [
 
-	^ (link head: 'Construct' arguments: { self } , args) value
+	^ link head: 'Construct' arguments: { self } , args
 ]
 
 { #category : #evaluating }
