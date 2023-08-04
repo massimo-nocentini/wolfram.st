@@ -406,7 +406,7 @@ WolframExpression >> standaloneLatexFooter [
 WolframExpression >> standaloneLatexPreamble [
 	"https://tex.stackexchange.com/questions/353943/how-to-paste-a-mathematica-formula-to-the-latex-unicode-included"
 
-	^ '\documentclass[12pt]{standalone}
+	^ '\documentclass[12pt,varwidth]{standalone}
 \usepackage{mathtools}
 \usepackage{concrete}
 \usepackage{euler}
