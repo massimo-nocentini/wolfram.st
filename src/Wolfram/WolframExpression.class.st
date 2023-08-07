@@ -82,6 +82,14 @@ WolframExpression >> /, exp [
 ]
 
 { #category : #visiting }
+WolframExpression >> //, exp [
+
+	^ link head: 'ReplaceRepeated' arguments: {
+			  self.
+			  exp }
+]
+
+{ #category : #visiting }
 WolframExpression >> /@ exp [
 
 	^ link head: 'Map' arguments: {
