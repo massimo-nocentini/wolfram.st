@@ -369,6 +369,12 @@ WolframExpression >> link: anObject [
 	link := anObject
 ]
 
+{ #category : #arithmetic }
+WolframExpression >> negated [
+
+	^ link head: 'Minus' arguments: { self }
+]
+
 { #category : #accessing }
 WolframExpression >> pattern: expr [
 
@@ -414,7 +420,7 @@ WolframExpression >> standaloneLatexFooter [
 WolframExpression >> standaloneLatexPreamble [
 	"https://tex.stackexchange.com/questions/353943/how-to-paste-a-mathematica-formula-to-the-latex-unicode-included"
 
-	^ '\documentclass[12pt,varwidth]{standalone}
+	^ '\documentclass[12pt]{standalone}
 \usepackage{mathtools}
 \usepackage{concrete}
 \usepackage{euler}
