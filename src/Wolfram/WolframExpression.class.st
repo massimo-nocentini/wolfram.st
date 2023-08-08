@@ -403,6 +403,14 @@ WolframExpression >> putOnLink: aLink [
 	self arguments do: [ :each | each putOnLink: aLink ]
 ]
 
+{ #category : #arithmetic }
+WolframExpression >> reciprocal [
+
+	^ link head: 'Divide' arguments: {
+			  1.
+			  self }
+]
+
 { #category : #accessing }
 WolframExpression >> showPdfInsteadOfTeX [
 
