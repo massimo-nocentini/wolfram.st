@@ -1,10 +1,11 @@
 Class {
-	#name : #WolframArbitraryPrecisionNumber,
-	#superclass : #WolframExpression,
-	#category : #Wolfram
+	#name : 'WolframArbitraryPrecisionNumber',
+	#superclass : 'WolframExpression',
+	#category : 'Wolfram',
+	#package : 'Wolfram'
 }
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WolframArbitraryPrecisionNumber >> asTeXifiedShape [
 
 	| liblua texContent texChunk shape |
@@ -37,7 +38,7 @@ WolframArbitraryPrecisionNumber >> asTeXifiedShape [
 		  yourself
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WolframArbitraryPrecisionNumber >> putOnLink: alink [
 
 	self subclassResponsibility

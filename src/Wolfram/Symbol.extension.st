@@ -1,6 +1,6 @@
-Extension { #name : #Symbol }
+Extension { #name : 'Symbol' }
 
-{ #category : #'*Wolfram' }
+{ #category : '*Wolfram' }
 Symbol >> putOnLink: link [
 
 	link putSymbol: self

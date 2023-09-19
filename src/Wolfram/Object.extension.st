@@ -1,12 +1,12 @@
-Extension { #name : #Object }
+Extension { #name : 'Object' }
 
-{ #category : #'*Wolfram' }
+{ #category : '*Wolfram' }
 Object >> isWolframExpression [
 
 	^ false
 ]
 
-{ #category : #'*Wolfram' }
+{ #category : '*Wolfram' }
 Object >> reifyWolframExpressionOnLink: link [
 
 	^ self

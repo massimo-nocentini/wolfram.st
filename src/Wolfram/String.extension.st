@@ -1,6 +1,6 @@
-Extension { #name : #String }
+Extension { #name : 'String' }
 
-{ #category : #'*Wolfram' }
+{ #category : '*Wolfram' }
 String >> putOnLink: link [
 
 	link putString: self

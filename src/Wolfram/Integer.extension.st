@@ -1,6 +1,6 @@
-Extension { #name : #Integer }
+Extension { #name : 'Integer' }
 
-{ #category : #'*Wolfram' }
+{ #category : '*Wolfram' }
 Integer >> putOnLink: aLink [
 
 	aLink putInteger: self

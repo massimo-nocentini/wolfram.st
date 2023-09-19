@@ -1,22 +1,23 @@
 Class {
-	#name : #WolframExpression,
-	#superclass : #Object,
+	#name : 'WolframExpression',
+	#superclass : 'Object',
 	#instVars : [
 		'head',
 		'arguments',
 		'link',
 		'showPdfInsteadOfTeX'
 	],
-	#category : #Wolfram
+	#category : 'Wolfram',
+	#package : 'Wolfram'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 WolframExpression >> ! exp [
 
 	^ (self valueWithArguments: { exp }) value
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 WolframExpression >> & recvBlock [
 
 	| f |
@@ -25,7 +26,7 @@ WolframExpression >> & recvBlock [
 	^ recvBlock value: f
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 WolframExpression >> && exp [
 
 	^ link head: 'And' arguments: {
@@ -33,7 +34,7 @@ WolframExpression >> && exp [
 			  exp }
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 WolframExpression >> * exp [
 
 	^ link head: 'Times' arguments: {
@@ -41,7 +42,7 @@ WolframExpression >> * exp [
 			  exp }
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 WolframExpression >> ** exp [
 
 	^ link head: 'Power' arguments: {
@@ -49,7 +50,7 @@ WolframExpression >> ** exp [
 			  exp }
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 WolframExpression >> + exp [
 
 	^ link head: 'Plus' arguments: {
@@ -57,7 +58,7 @@ WolframExpression >> + exp [
 			  exp }
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 WolframExpression >> - exp [
 
 	^ link head: 'Subtract' arguments: {
@@ -65,7 +66,7 @@ WolframExpression >> - exp [
 			  exp }
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 WolframExpression >> / exp [
 
 	^ link head: 'Divide' arguments: {
@@ -73,7 +74,7 @@ WolframExpression >> / exp [
 			  exp }
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 WolframExpression >> /, exp [
 
 	^ link head: 'ReplaceAll' arguments: {
@@ -81,7 +82,7 @@ WolframExpression >> /, exp [
 			  exp }
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 WolframExpression >> //, exp [
 
 	^ link head: 'ReplaceRepeated' arguments: {
@@ -89,7 +90,7 @@ WolframExpression >> //, exp [
 			  exp }
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 WolframExpression >> /@ exp [
 
 	^ link head: 'Map' arguments: {
@@ -97,7 +98,7 @@ WolframExpression >> /@ exp [
 			  exp }
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 WolframExpression >> <- exp [
 
 	^ link head: 'Set' arguments: {
@@ -105,13 +106,13 @@ WolframExpression >> <- exp [
 			  exp }
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 WolframExpression >> <-| exp [
 
 	^ exp |-> self
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 WolframExpression >> === exp [
 
 	^ link head: 'Equal' arguments: {
@@ -119,7 +120,7 @@ WolframExpression >> === exp [
 			  exp }
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 WolframExpression >> => exp [
 
 	^ link head: 'Implies' arguments: {
@@ -127,7 +128,7 @@ WolframExpression >> => exp [
 			  exp }
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 WolframExpression >> > exp [
 
 	^ link head: 'Greater' arguments: {
@@ -135,15 +136,13 @@ WolframExpression >> > exp [
 			  exp }
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WolframExpression >> ? args [
 
-	^ (link head: 'Information' arguments: { self } , args)
-		  showPdfInsteadOfTeX;
-		  yourself
+	^ link head: 'Information' arguments: { self } , args
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 WolframExpression >> @ exp [
 
 	^ link head: 'Indexed' arguments: {
@@ -151,7 +150,7 @@ WolframExpression >> @ exp [
 			  exp }
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 WolframExpression >> @! exp [
 
 	^ link head: 'Part' arguments: {
@@ -159,7 +158,7 @@ WolframExpression >> @! exp [
 			  exp }
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 WolframExpression >> @* exp [
 
 	^ link head: 'Composition' arguments: {
@@ -167,7 +166,7 @@ WolframExpression >> @* exp [
 			  exp }
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 WolframExpression >> @@ args [
 
 	^ link head: 'Apply' arguments: {
@@ -175,31 +174,31 @@ WolframExpression >> @@ args [
 			  args }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WolframExpression >> _ [
 
 	^ self pattern: link _
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 WolframExpression >> acceptSlotDescriptorsVisitor: aVisitor [
 
 	^ aVisitor visitWolframExpression: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WolframExpression >> arguments [
 
 	^ arguments
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WolframExpression >> arguments: anObject [
 
 	arguments := anObject
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WolframExpression >> asDefaultShapeForWalker: walker descriptor: descriptor [
 
 	^ showPdfInsteadOfTeX
@@ -207,7 +206,7 @@ WolframExpression >> asDefaultShapeForWalker: walker descriptor: descriptor [
 		  ifFalse: [ self asTeXifiedShape ]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WolframExpression >> asExportedPdfShape [
 
 	| fileReference fullName shape |
@@ -236,7 +235,7 @@ WolframExpression >> asExportedPdfShape [
 		  yourself
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WolframExpression >> asMathematicaPrintString [
 
 	| liblua |
@@ -261,7 +260,7 @@ WolframExpression >> asMathematicaPrintString [
 		  liblua on: L at: -1 ]
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WolframExpression >> asTeXifiedShape [
 
 	| liblua texContent texChunk shape |
@@ -298,7 +297,7 @@ WolframExpression >> asTeXifiedShape [
 		  yourself
 ]
 
-{ #category : #'reflective operations' }
+{ #category : 'reflective operations' }
 WolframExpression >> doesNotUnderstand: message [
 
 	^ link
@@ -311,13 +310,13 @@ WolframExpression >> doesNotUnderstand: message [
 				   yourself)
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WolframExpression >> evaluate [
 
 	^ self -> self value
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 WolframExpression >> graphics2D [
 
 	^ (link head: 'Graphics' arguments: { self })
@@ -325,31 +324,31 @@ WolframExpression >> graphics2D [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WolframExpression >> head [
 
 	^ head
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WolframExpression >> head: anObject [
 
 	head := anObject
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WolframExpression >> info [
 
 	^ self ? { (link head: 'Rule' arguments: #( LongForm True )) }
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WolframExpression >> infoShort [
 
 	^ self ? { (link head: 'Rule' arguments: #( LongForm False )) }
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 WolframExpression >> initialize [
 
 	super initialize.
@@ -357,25 +356,25 @@ WolframExpression >> initialize [
 	showPdfInsteadOfTeX := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WolframExpression >> isWolframExpression [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WolframExpression >> link: anObject [
 
 	link := anObject
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 WolframExpression >> negated [
 
 	^ link head: 'Minus' arguments: { self }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WolframExpression >> pattern: expr [
 
 	^ link head: 'Pattern' arguments: {
@@ -383,7 +382,7 @@ WolframExpression >> pattern: expr [
 			  expr }
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WolframExpression >> printOn: stream [
 
 	super printOn: stream.
@@ -395,7 +394,7 @@ WolframExpression >> printOn: stream [
 		<< ')'
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WolframExpression >> putOnLink: aLink [
 
 	aLink putFunction: self head arity: self arguments size.
@@ -403,7 +402,7 @@ WolframExpression >> putOnLink: aLink [
 	self arguments do: [ :each | each putOnLink: aLink ]
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 WolframExpression >> reciprocal [
 
 	^ link head: 'Divide' arguments: {
@@ -411,20 +410,20 @@ WolframExpression >> reciprocal [
 			  self }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WolframExpression >> showPdfInsteadOfTeX [
 
 	showPdfInsteadOfTeX := true
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WolframExpression >> standaloneLatexFooter [
 
 	^ ' \)
 \end{document}'
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WolframExpression >> standaloneLatexPreamble [
 	"https://tex.stackexchange.com/questions/353943/how-to-paste-a-mathematica-formula-to-the-latex-unicode-included"
 
@@ -450,7 +449,7 @@ WolframExpression >> standaloneLatexPreamble [
 \(\displaystyle '
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WolframExpression >> usageString [
 
 	^ (link
@@ -460,7 +459,7 @@ WolframExpression >> usageString [
 					    'Usage' }) }) value
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WolframExpression >> value [
 
 	| liblua ret |
@@ -486,13 +485,13 @@ WolframExpression >> value [
 	^ ret reifyWolframExpressionOnLink: link
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 WolframExpression >> valueWithArguments: args [
 
 	^ link head: 'Construct' arguments: { self } , args
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WolframExpression >> withStandaloneLaTeXStreamDo: block [
 
 	^ String streamContents: [ :aStream |
@@ -501,7 +500,7 @@ WolframExpression >> withStandaloneLaTeXStreamDo: block [
 		  aStream << self standaloneLatexFooter ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 WolframExpression >> |-> exp [
 
 	^ link head: 'Function' arguments: {

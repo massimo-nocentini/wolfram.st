@@ -1,48 +1,49 @@
 Class {
-	#name : #WolframLink,
-	#superclass : #WolframHandleHolder,
-	#category : #Wolfram
+	#name : 'WolframLink',
+	#superclass : 'WolframHandleHolder',
+	#category : 'Wolfram',
+	#package : 'Wolfram'
 }
 
-{ #category : #expressions }
+{ #category : 'expressions' }
 WolframLink >> ! anObject [
 	"https://reference.wolfram.com/language/ref/ToExpression.html"
 
 	^ (self head: 'ToExpression' arguments: { anObject }) value
 ]
 
-{ #category : #expressions }
+{ #category : 'expressions' }
 WolframLink >> % anObject [
 
 	^ self head: 'Out' arguments: { anObject }
 ]
 
-{ #category : #expressions }
+{ #category : 'expressions' }
 WolframLink >> << anObject [
 
 	^ self head: 'Identity' arguments: { anObject }
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 WolframLink >> @ i [
 	"From the [official documentation](https://reference.wolfram.com/language/ref/Slot.html)"
 
 	^ self head: 'Slot' arguments: { i }
 ]
 
-{ #category : #expressions }
+{ #category : 'expressions' }
 WolframLink >> _ [
 
 	^ self head: 'Blank' arguments: {  }
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 WolframLink >> acceptSlotDescriptorsVisitor: visitor [
 
 	^ visitor visitWolframLink: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 WolframLink >> activate [
 
 	^ self
@@ -50,7 +51,7 @@ WolframLink >> activate [
 		  module: WolframLibrary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 WolframLink >> arbitraryPrecisionNumber: numberAsString headIsInteger: bool [
 
 	| expr |
@@ -70,7 +71,7 @@ WolframLink >> arbitraryPrecisionNumber: numberAsString headIsInteger: bool [
 		  yourself
 ]
 
-{ #category : #'reflective operations' }
+{ #category : 'reflective operations' }
 WolframLink >> doesNotUnderstand: message [
 
 	| selector |
@@ -85,7 +86,7 @@ WolframLink >> doesNotUnderstand: message [
 				  ifFalse: [ super doesNotUnderstand: message ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 WolframLink >> endPacket [
 
 	^ self
@@ -93,7 +94,7 @@ WolframLink >> endPacket [
 		  module: WolframLibrary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 WolframLink >> flush [
 
 	^ self
@@ -101,7 +102,7 @@ WolframLink >> flush [
 		  module: WolframLibrary
 ]
 
-{ #category : #expressions }
+{ #category : 'expressions' }
 WolframLink >> head: head arguments: args [
 
 	head isSymbol ifTrue: [ Error signal: 'A String object is required.' ].
@@ -114,7 +115,7 @@ WolframLink >> head: head arguments: args [
 		  yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 WolframLink >> name [
 
 	^ self
@@ -122,7 +123,7 @@ WolframLink >> name [
 		  module: WolframLibrary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 WolframLink >> newPacket [
 
 	^ self
@@ -130,7 +131,7 @@ WolframLink >> newPacket [
 		  module: WolframLibrary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 WolframLink >> nextPacket [
 
 	^ self
@@ -138,7 +139,7 @@ WolframLink >> nextPacket [
 		  module: WolframLibrary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 WolframLink >> putArbitraryPrecisionNumber: s [
 
 	^ self
@@ -148,13 +149,13 @@ WolframLink >> putArbitraryPrecisionNumber: s [
 		  module: WolframLibrary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 WolframLink >> putExpression: exp [
 
 	^ exp putOnLink: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 WolframLink >> putFloat: i [
 
 	^ self
@@ -162,7 +163,7 @@ WolframLink >> putFloat: i [
 		  module: WolframLibrary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 WolframLink >> putFunction: f arity: argc [
 
 	^ self
@@ -172,7 +173,7 @@ WolframLink >> putFunction: f arity: argc [
 		  module: WolframLibrary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 WolframLink >> putInteger: i [
 
 	^ self
@@ -180,7 +181,7 @@ WolframLink >> putInteger: i [
 		  module: WolframLibrary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 WolframLink >> putString: s [
 
 	^ self
@@ -189,7 +190,7 @@ WolframLink >> putString: s [
 		  module: WolframLibrary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 WolframLink >> putSymbol: s [
 
 	^ self
@@ -198,7 +199,7 @@ WolframLink >> putSymbol: s [
 		  module: WolframLibrary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 WolframLink >> putUTF8String: s len: l [
 
 	^ self
@@ -208,7 +209,7 @@ WolframLink >> putUTF8String: s len: l [
 		  module: WolframLibrary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 WolframLink >> putUTF8Symbol: s len: l [
 
 	^ self
@@ -218,7 +219,7 @@ WolframLink >> putUTF8Symbol: s len: l [
 		  module: WolframLibrary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 WolframLink >> releaseHandler [
 
 	^ self
@@ -226,7 +227,7 @@ WolframLink >> releaseHandler [
 		  module: WolframLibrary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WolframLink >> symbol: sym [
 
 	^ WolframSymbolExpression new

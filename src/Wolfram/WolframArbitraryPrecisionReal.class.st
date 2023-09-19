@@ -1,10 +1,11 @@
 Class {
-	#name : #WolframArbitraryPrecisionReal,
-	#superclass : #WolframArbitraryPrecisionNumber,
-	#category : #Wolfram
+	#name : 'WolframArbitraryPrecisionReal',
+	#superclass : 'WolframArbitraryPrecisionNumber',
+	#category : 'Wolfram',
+	#package : 'Wolfram'
 }
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WolframArbitraryPrecisionReal >> asTeXifiedShape [
 
 	link
@@ -16,7 +17,7 @@ WolframArbitraryPrecisionReal >> asTeXifiedShape [
 	^ super asTeXifiedShape
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WolframArbitraryPrecisionReal >> putOnLink: alink [
 
 	alink putArbitraryPrecisionNumber: self arguments first

@@ -1,6 +1,6 @@
-Extension { #name : #Association }
+Extension { #name : 'Association' }
 
-{ #category : #'*Wolfram' }
+{ #category : '*Wolfram' }
 Association >> putOnLink: link [
 
 	^ (link head: 'Rule' arguments: {

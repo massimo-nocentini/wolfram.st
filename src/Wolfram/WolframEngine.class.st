@@ -1,14 +1,15 @@
 Class {
-	#name : #WolframEngine,
-	#superclass : #Object,
+	#name : 'WolframEngine',
+	#superclass : 'Object',
 	#classVars : [
 		'Env',
 		'Link'
 	],
-	#category : #Wolfram
+	#category : 'Wolfram',
+	#package : 'Wolfram'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WolframEngine class >> link [
 
 	^ (Env isNil or: [ Link isNil ])
@@ -30,7 +31,7 @@ WolframEngine class >> link [
 			  self link ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 WolframEngine class >> wsenv [
 
 	^ self

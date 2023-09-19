@@ -1,6 +1,6 @@
-Extension { #name : #False }
+Extension { #name : 'False' }
 
-{ #category : #'*Wolfram' }
+{ #category : '*Wolfram' }
 False >> putOnLink: aLink [
 
 	#False putOnLink: aLink

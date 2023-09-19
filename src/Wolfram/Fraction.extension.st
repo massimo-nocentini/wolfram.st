@@ -1,6 +1,6 @@
-Extension { #name : #Fraction }
+Extension { #name : 'Fraction' }
 
-{ #category : #'*Wolfram' }
+{ #category : '*Wolfram' }
 Fraction >> putOnLink: link [
 
 	(link head: 'Rational' arguments: {

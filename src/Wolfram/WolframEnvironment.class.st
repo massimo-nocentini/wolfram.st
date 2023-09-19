@@ -1,17 +1,18 @@
 Class {
-	#name : #WolframEnvironment,
-	#superclass : #WolframHandleHolder,
-	#category : #Wolfram
+	#name : 'WolframEnvironment',
+	#superclass : 'WolframHandleHolder',
+	#category : 'Wolfram',
+	#package : 'Wolfram'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 WolframEnvironment >> newLinkOpenString [
 
 	^ self newLinkOpenString:
 		  'pharo -linkmode launch -linkname "wolfram -wstp -noprompt -noicon"'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 WolframEnvironment >> newLinkOpenString: str [
 
 	^ WolframLink basicNew
@@ -20,7 +21,7 @@ WolframEnvironment >> newLinkOpenString: str [
 		  yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 WolframEnvironment >> releaseHandler [
 
 	^ self
@@ -28,7 +29,7 @@ WolframEnvironment >> releaseHandler [
 		  module: WolframLibrary
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 WolframEnvironment >> wsOpenString: str [
 
 	^ self

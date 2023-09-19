@@ -1,6 +1,6 @@
-Extension { #name : #SequenceableCollection }
+Extension { #name : 'SequenceableCollection' }
 
-{ #category : #'*Wolfram' }
+{ #category : '*Wolfram' }
 SequenceableCollection >> putOnLink: link [
 
 	^ (link head: 'List' arguments: self) putOnLink: link

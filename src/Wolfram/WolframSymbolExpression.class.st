@@ -1,10 +1,11 @@
 Class {
-	#name : #WolframSymbolExpression,
-	#superclass : #WolframExpression,
-	#category : #Wolfram
+	#name : 'WolframSymbolExpression',
+	#superclass : 'WolframExpression',
+	#category : 'Wolfram',
+	#package : 'Wolfram'
 }
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WolframSymbolExpression >> putOnLink: aLink [
 
 	self arguments first putOnLink: aLink

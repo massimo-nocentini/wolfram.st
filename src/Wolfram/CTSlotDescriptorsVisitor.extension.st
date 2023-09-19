@@ -1,6 +1,6 @@
-Extension { #name : #CTSlotDescriptorsVisitor }
+Extension { #name : 'CTSlotDescriptorsVisitor' }
 
-{ #category : #'*Wolfram' }
+{ #category : '*Wolfram' }
 CTSlotDescriptorsVisitor >> visitWolframExpression: expr [
 
 	^ {"
@@ -12,7 +12,7 @@ CTSlotDescriptorsVisitor >> visitWolframExpression: expr [
 			   quote)" }
 ]
 
-{ #category : #'*Wolfram' }
+{ #category : '*Wolfram' }
 CTSlotDescriptorsVisitor >> visitWolframLink: link [
 
 	^ {

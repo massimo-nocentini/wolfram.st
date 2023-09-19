@@ -1,10 +1,11 @@
 Class {
-	#name : #WolframArbitraryPrecisionInteger,
-	#superclass : #WolframArbitraryPrecisionNumber,
-	#category : #Wolfram
+	#name : 'WolframArbitraryPrecisionInteger',
+	#superclass : 'WolframArbitraryPrecisionNumber',
+	#category : 'Wolfram',
+	#package : 'Wolfram'
 }
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WolframArbitraryPrecisionInteger >> asTeXifiedShape [
 
 	link
@@ -16,7 +17,7 @@ WolframArbitraryPrecisionInteger >> asTeXifiedShape [
 	^ super asTeXifiedShape
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 WolframArbitraryPrecisionInteger >> putOnLink: alink [
 
 	(alink head: 'FromDigits' arguments: self arguments) putOnLink: alink

@@ -1,6 +1,6 @@
-Extension { #name : #Float }
+Extension { #name : 'Float' }
 
-{ #category : #'*Wolfram' }
+{ #category : '*Wolfram' }
 Float >> putOnLink: aLink [
 
 	aLink putFloat: self
