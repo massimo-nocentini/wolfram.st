@@ -246,7 +246,7 @@ WolframExpression >> asMathematicaPrintString [
 		endPacket;
 		flush.
 
-	liblua := LibLua uniqueInstance.
+	liblua := LibLua uniqueInstance implementationPrimitive.
 
 	^ liblua withOpenedLibsStateDo: [ :L |
 		  liblua on: L assertLUAOK: [
@@ -272,7 +272,7 @@ WolframExpression >> asTeXifiedShape [
 		endPacket;
 		flush.
 
-	liblua := LibLua uniqueInstance.
+	liblua := LibLua uniqueInstance implementationPrimitive.
 
 	texChunk := liblua withOpenedLibsStateDo: [ :L |
 		            liblua on: L assertLUAOK: [
@@ -469,7 +469,7 @@ WolframExpression >> value [
 		endPacket;
 		flush.
 
-	liblua := LibLua uniqueInstance.
+	liblua := LibLua uniqueInstance implementationPrimitive.
 
 	ret := liblua withOpenedLibsStateDo: [ :L |
 		       liblua on: L assertLUAOK: [
