@@ -253,7 +253,7 @@ WolframExpression >> asMathematicaPrintString [
 			  liblua
 				  luaL_requiref: L name: 'wolfram';
 				  on: L push: #wolfram;
-				  lua_getfield: L at: -1 name: 'evaluate';
+				  lua: L get: -1 field: 'evaluate';
 				  on: L push: link;
 				  lua_pcall: L nargs: 1 nresults: liblua LUA_MULTRET ].
 
@@ -279,7 +279,7 @@ WolframExpression >> asTeXifiedShape [
 			            liblua
 				            luaL_requiref: L name: 'wolfram';
 				            on: L push: #wolfram;
-				            lua_getfield: L at: -1 name: 'evaluate';
+				            lua: L get: -1 field: 'evaluate';
 				            on: L push: link;
 				            lua_pcall: L nargs: 1 nresults: liblua LUA_MULTRET ].
 
@@ -476,7 +476,7 @@ WolframExpression >> value [
 			       liblua
 				       luaL_requiref: L name: 'wolfram';
 				       on: L push: #wolfram;
-				       lua_getfield: L at: -1 name: 'evaluate';
+				       lua: L get: -1 field: 'evaluate';
 				       on: L push: link;
 				       lua_pcall: L nargs: 1 nresults: liblua LUA_MULTRET ].
 
