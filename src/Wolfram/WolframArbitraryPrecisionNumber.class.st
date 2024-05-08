@@ -29,7 +29,7 @@ WolframArbitraryPrecisionNumber >> asTeXifiedShape [
 	texContent := self withStandaloneLaTeXStreamDo: [ :aStream |
 		              aStream << texChunk ].
 
-	shape := (RSPdf compileTeX: texContent times: 1) pages
+	shape := (PopplerPdf compileTeX: texContent times: 1) pages
 		         ifEmpty: [ RSComposite new ]
 		         ifNotEmpty: [ :pages | pages first ].
 

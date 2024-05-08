@@ -224,7 +224,7 @@ WolframExpression >> asExportedPdfShape [
 			 "self."
 			 'PDF' }) value.
 
-	shape := (RSPdf new
+	shape := (PopplerPdf new
 		          fileReference: fullName asFileReference;
 		          pages)
 		         ifEmpty: [ RSComposite new ]
@@ -288,7 +288,7 @@ WolframExpression >> asTeXifiedShape [
 	texContent := self withStandaloneLaTeXStreamDo: [ :aStream |
 		              aStream << texChunk ].
 
-	shape := (RSPdf compileTeX: texContent times: 1) pages
+	shape := (PopplerPdf compileTeX: texContent times: 1) pages
 		         ifEmpty: [ RSComposite new ]
 		         ifNotEmpty: [ :pages | pages first ].
 
