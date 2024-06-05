@@ -31,10 +31,9 @@ WolframEngine class >> link [
 			  self link ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'primitives' }
 WolframEngine class >> wsenv [
 
-	^ self
-		  ffiCall: #( void #* WSInitialize #( NULL ) )
-		  module: WolframLibrary
+	<primitive: 'primitive_WSInitialize' module: 'WolframPlugin'>
+	self primitiveFailed
 ]
