@@ -5,6 +5,20 @@ Class {
 	#package : 'Wolfram'
 }
 
+{ #category : 'primitives' }
+WolframEnvironment >> deinitializeHandle: handle [
+
+	<primitive: 'primitive_WSDeinitialize' module: 'WolframPlugin'>
+	self primitiveFailed
+]
+
+{ #category : 'primitives' }
+WolframEnvironment >> envHandle: envHandle commandLineString: str [
+
+	<primitive: 'primitive_WSOpenString' module: 'WolframPlugin'>
+	self primitiveFailed
+]
+
 { #category : 'instance creation' }
 WolframEnvironment >> newLinkOpenString [
 
@@ -24,17 +38,11 @@ WolframEnvironment >> newLinkOpenString: str [
 { #category : 'as yet unclassified' }
 WolframEnvironment >> releaseHandler [
 
-	^ self
-		  ffiCall: #( void WSDeinitialize #( void #* handler ) )
-		  module: WolframLibrary
+	^ self deinitializeHandle: self handler
 ]
 
 { #category : 'as yet unclassified' }
 WolframEnvironment >> wsOpenString: str [
 
-	^ self
-		  ffiCall:
-		  #( void #* WSOpenString #( void #* handler #, const char #* str
-		        #, NULL ) )
-		  module: WolframLibrary
+	^ self envHandle: self handler commandLineString: str
 ]
