@@ -56,26 +56,6 @@ WolframLink >> activateLinkHandle: handle [
 	self primitiveFailed
 ]
 
-{ #category : 'API' }
-WolframLink >> arbitraryPrecisionNumber: numberAsString headIsInteger: bool [
-
-	| expr |
-	expr := bool
-		        ifTrue: [
-			        WolframArbitraryPrecisionInteger new
-				        head: 'Integer';
-				        yourself ]
-		        ifFalse: [
-			        WolframArbitraryPrecisionReal new
-				        head: 'Real';
-				        yourself ].
-
-	^ expr
-		  arguments: { numberAsString };
-		  link: self;
-		  yourself
-]
-
 { #category : 'reflective operations' }
 WolframLink >> doesNotUnderstand: message [
 
@@ -101,6 +81,19 @@ WolframLink >> endPacket [
 WolframLink >> endPacketLinkHandle: handle [
 
 	<primitive: 'primitive_WSEndPacket' module: 'WolframPlugin'>
+	self primitiveFailed
+]
+
+{ #category : 'API' }
+WolframLink >> evaluate [
+
+	^ self evaluateExpressionClass: WolframExpression
+]
+
+{ #category : 'primitives' }
+WolframLink >> evaluateExpressionClass: eClass [
+
+	<primitive: 'primitive_read_from_link' module: 'WolframPlugin'>
 	self primitiveFailed
 ]
 

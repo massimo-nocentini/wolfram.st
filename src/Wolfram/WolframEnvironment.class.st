@@ -22,9 +22,13 @@ WolframEnvironment >> envHandle: envHandle openString: str [
 { #category : 'instance creation' }
 WolframEnvironment >> newLinkOpenString [
 
+	| handle |
+	handle := self wsOpenString:
+		          'pharo -linkmode launch -linkname '
+		          , self wolframCommandString.
+
 	^ WolframLink basicNew
-		  handler: (self wsOpenString:
-					   'pharo -linkmode launch -linkname "wolfram -wstp -noprompt -noicon"');
+		  handler: handle;
 		  initialize;
 		  yourself
 ]
@@ -33,6 +37,12 @@ WolframEnvironment >> newLinkOpenString [
 WolframEnvironment >> releaseHandler [
 
 	^ self deinitializeHandle: self handler
+]
+
+{ #category : 'instance creation' }
+WolframEnvironment >> wolframCommandString [
+
+	^ '"wolfram -wstp -noprompt -noicon"'
 ]
 
 { #category : 'as yet unclassified' }

@@ -238,52 +238,27 @@ WolframExpression >> asExportedPdfShape [
 { #category : 'evaluating' }
 WolframExpression >> asMathematicaPrintString [
 
-	| liblua |
-	link
-		putFunction: 'TextString' arity: 1;
-		putFunction: 'HoldForm' arity: 1;
-		putExpression: self;
-		endPacket;
-		flush.
-
-	liblua := LibLua uniqueInstance implementationPrimitive.
-
-	^ liblua withOpenedLibsStateDo: [ :L |
-		  liblua on: L assertLUAOK: [
-			  liblua
-				  luaL_requiref: L name: 'wolfram';
-				  on: L push: #wolfram;
-				  lua: L get: -1 field: 'evaluate';
-				  on: L push: link;
-				  lua_pcall: L nargs: 1 nresults: liblua LUA_MULTRET ].
-
-		  liblua on: L at: -1 ]
+	^ link
+		  putFunction: 'TextString' arity: 1;
+		  putFunction: 'HoldForm' arity: 1;
+		  putExpression: self;
+		  endPacket;
+		  flush;
+		  evaluate
 ]
 
 { #category : 'evaluating' }
 WolframExpression >> asTeXifiedShape [
 
-	| liblua texContent texChunk shape |
-	link
-		putFunction: 'ToString' arity: 1;
-		putFunction: 'TeXForm' arity: 1;
-		putFunction: 'HoldForm' arity: 1;
-		putExpression: self;
-		endPacket;
-		flush.
-
-	liblua := LibLua uniqueInstance implementationPrimitive.
-
-	texChunk := liblua withOpenedLibsStateDo: [ :L |
-		            liblua on: L assertLUAOK: [
-			            liblua
-				            luaL_requiref: L name: 'wolfram';
-				            on: L push: #wolfram;
-				            lua: L get: -1 field: 'evaluate';
-				            on: L push: link;
-				            lua_pcall: L nargs: 1 nresults: liblua LUA_MULTRET ].
-
-		            liblua on: L at: -1 ].
+	| texContent texChunk shape |
+	texChunk := link
+		            putFunction: 'ToString' arity: 1;
+		            putFunction: 'TeXForm' arity: 1;
+		            putFunction: 'HoldForm' arity: 1;
+		            putExpression: self;
+		            endPacket;
+		            flush;
+		            evaluate.
 
 	texContent := self withStandaloneLaTeXStreamDo: [ :aStream |
 		              aStream << texChunk ].
@@ -462,27 +437,12 @@ WolframExpression >> usageString [
 { #category : 'evaluating' }
 WolframExpression >> value [
 
-	| liblua ret |
-	link
-		putFunction: 'EvaluatePacket' arity: 1;
-		putExpression: self;
-		endPacket;
-		flush.
-
-	liblua := LibLua uniqueInstance implementationPrimitive.
-
-	ret := liblua withOpenedLibsStateDo: [ :L |
-		       liblua on: L assertLUAOK: [
-			       liblua
-				       luaL_requiref: L name: 'wolfram';
-				       on: L push: #wolfram;
-				       lua: L get: -1 field: 'evaluate';
-				       on: L push: link;
-				       lua_pcall: L nargs: 1 nresults: liblua LUA_MULTRET ].
-
-		       liblua on: L at: -1 ].
-
-	^ ret reifyWolframExpressionOnLink: link
+	^ link
+		  putFunction: 'EvaluatePacket' arity: 1;
+		  putExpression: self;
+		  endPacket;
+		  flush;
+		  evaluate
 ]
 
 { #category : 'visiting' }
