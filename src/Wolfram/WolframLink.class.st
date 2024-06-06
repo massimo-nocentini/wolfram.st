@@ -87,11 +87,15 @@ WolframLink >> endPacketLinkHandle: handle [
 { #category : 'API' }
 WolframLink >> evaluate [
 
-	^ self evaluateExpressionClass: WolframExpression
+	^ self
+		  evaluateExpressionClass: WolframExpression
+		  expressionSymbolClass: WolframSymbolExpression
+		  expressionIntegerClass: WolframArbitraryPrecisionInteger
+		  expressionRealClass: WolframArbitraryPrecisionReal
 ]
 
 { #category : 'primitives' }
-WolframLink >> evaluateExpressionClass: eClass [
+WolframLink >> evaluateExpressionClass: eClass expressionSymbolClass: sClass expressionIntegerClass: iClass expressionRealClass: rClass [
 
 	<primitive: 'primitive_read_from_link' module: 'WolframPlugin'>
 	self primitiveFailed
