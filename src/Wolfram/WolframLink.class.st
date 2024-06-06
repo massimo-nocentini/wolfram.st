@@ -24,7 +24,7 @@ WolframLink >> << anObject [
 	^ self head: 'Identity' arguments: { anObject }
 ]
 
-{ #category : 'operations' }
+{ #category : 'expressions' }
 WolframLink >> @ i [
 	"From the [official documentation](https://reference.wolfram.com/language/ref/Slot.html)"
 
@@ -205,14 +205,14 @@ WolframLink >> putSymbol: s [
 	self primitiveFailed
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'resources' }
 WolframLink >> releaseHandler [
 
 	<primitive: 'primitive_WSClose' module: 'WolframPlugin'>
 	self primitiveFailed
 ]
 
-{ #category : 'accessing' }
+{ #category : 'expressions' }
 WolframLink >> symbol: sym [
 
 	^ WolframSymbolExpression new

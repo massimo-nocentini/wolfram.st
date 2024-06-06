@@ -26,7 +26,7 @@ WolframHandleHolder >> pushOnLua: L liblua: liblua [
 	^ self handler pushOnLua: L liblua: liblua
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'resources' }
 WolframHandleHolder >> releaseHandler [
 
 	handler := nil
