@@ -56,7 +56,7 @@ WolframLink >> activateLinkHandle: handle [
 	self primitiveFailed
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'API' }
 WolframLink >> arbitraryPrecisionNumber: numberAsString headIsInteger: bool [
 
 	| expr |
@@ -130,116 +130,86 @@ WolframLink >> head: head arguments: args [
 		  yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'API' }
 WolframLink >> name [
 
-	^ self
-		  ffiCall: #( const char #* WSLinkName #( void #* handler ) )
-		  module: WolframLibrary
+	^ self nameLinkHandle: self handler
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'primitives' }
+WolframLink >> nameLinkHandle: handle [
+
+	<primitive: 'primitive_WSLinkName' module: 'WolframPlugin'>
+	self primitiveFailed
+]
+
+{ #category : 'API' }
 WolframLink >> newPacket [
 
-	^ self
-		  ffiCall: #( int WSNewPacket #( void #* handler ) )
-		  module: WolframLibrary
+	<primitive: 'primitive_WSNewPacket' module: 'WolframPlugin'>
+	self primitiveFailed
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'API' }
 WolframLink >> nextPacket [
 
-	^ self
-		  ffiCall: #( int WSNextPacket #( void #* handler ) )
-		  module: WolframLibrary
+	<primitive: 'primitive_WSNextPacket' module: 'WolframPlugin'>
+	self primitiveFailed
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'API' }
 WolframLink >> putArbitraryPrecisionNumber: s [
 
-	^ self
-		  ffiCall:
-		  #( int WSPutRealNumberAsString #( void #* handler #, const char
-		        #* s ) )
-		  module: WolframLibrary
+	<primitive: 'primitive_WSPutRealNumberAsUTF8String' module: 'WolframPlugin'>
+	self primitiveFailed
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'dispatched' }
 WolframLink >> putExpression: exp [
 
 	^ exp putOnLink: self
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'dispatched' }
 WolframLink >> putFloat: i [
 
-	^ self
-		  ffiCall: #( int WSPutReal #( void #* handler #, double i ) )
-		  module: WolframLibrary
+	<primitive: 'primitive_WSPutReal' module: 'WolframPlugin'>
+	self primitiveFailed
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'dispatched' }
 WolframLink >> putFunction: f arity: argc [
 
-	^ self
-		  ffiCall:
-		  #( int WSPutFunction #( void #* handler #, const char #* f #, int
-		        argc ) )
-		  module: WolframLibrary
+	<primitive: 'primitive_WSPutUTF8Function' module: 'WolframPlugin'>
+	self primitiveFailed
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'dispatched' }
 WolframLink >> putInteger: i [
 
-	^ self
-		  ffiCall: #( int WSPutInteger64 #( void #* handler #, long i ) )
-		  module: WolframLibrary
+	<primitive: 'primitive_WSPutInteger32' module: 'WolframPlugin'>
+	self primitiveFailed
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'dispatched' }
 WolframLink >> putString: s [
 
-	^ self
-		  ffiCall:
-		  #( int WSPutString #( void #* handler #, const char #* s ) )
-		  module: WolframLibrary
+	<primitive: 'primitive_WSPutByteString' module: 'WolframPlugin'>
+	self primitiveFailed
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'dispatched' }
 WolframLink >> putSymbol: s [
 
-	^ self
-		  ffiCall:
-		  #( int WSPutSymbol #( void #* handler #, const char #* s ) )
-		  module: WolframLibrary
-]
-
-{ #category : 'as yet unclassified' }
-WolframLink >> putUTF8String: s len: l [
-
-	^ self
-		  ffiCall:
-			  #( int WSPutUTF8String #( void #* handler #, const char #* s #,
-			        int l ) )
-		  module: WolframLibrary
-]
-
-{ #category : 'as yet unclassified' }
-WolframLink >> putUTF8Symbol: s len: l [
-
-	^ self
-		  ffiCall:
-			  #( int WSPutUTF8Symbol #( void #* handler #, const char #* s #,
-			        int l ) )
-		  module: WolframLibrary
+	<primitive: 'primitive_WSPutByteSymbol' module: 'WolframPlugin'>
+	self primitiveFailed
 ]
 
 { #category : 'as yet unclassified' }
 WolframLink >> releaseHandler [
 
-	^ self
-		  ffiCall: #( void WSClose #( void #* handler ) )
-		  module: WolframLibrary
+	<primitive: 'primitive_WSClose' module: 'WolframPlugin'>
+	self primitiveFailed
 ]
 
 { #category : 'accessing' }
