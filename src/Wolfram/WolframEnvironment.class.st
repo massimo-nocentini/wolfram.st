@@ -13,7 +13,7 @@ WolframEnvironment >> deinitializeHandle: handle [
 ]
 
 { #category : 'primitives' }
-WolframEnvironment >> envHandle: envHandle commandLineString: str [
+WolframEnvironment >> envHandle: envHandle openString: str [
 
 	<primitive: 'primitive_WSOpenString' module: 'WolframPlugin'>
 	self primitiveFailed
@@ -22,15 +22,9 @@ WolframEnvironment >> envHandle: envHandle commandLineString: str [
 { #category : 'instance creation' }
 WolframEnvironment >> newLinkOpenString [
 
-	^ self newLinkOpenString:
-		  'pharo -linkmode launch -linkname "wolfram -wstp -noprompt -noicon"'
-]
-
-{ #category : 'instance creation' }
-WolframEnvironment >> newLinkOpenString: str [
-
 	^ WolframLink basicNew
-		  handler: (self wsOpenString: str);
+		  handler: (self wsOpenString:
+					   'pharo -linkmode launch -linkname "wolfram -wstp -noprompt -noicon"');
 		  initialize;
 		  yourself
 ]
@@ -44,5 +38,5 @@ WolframEnvironment >> releaseHandler [
 { #category : 'as yet unclassified' }
 WolframEnvironment >> wsOpenString: str [
 
-	^ self envHandle: self handler commandLineString: str
+	^ self envHandle: self handler openString: str
 ]

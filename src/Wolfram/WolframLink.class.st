@@ -43,12 +43,17 @@ WolframLink >> acceptSlotDescriptorsVisitor: visitor [
 	^ visitor visitWolframLink: self
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'API' }
 WolframLink >> activate [
 
-	^ self
-		  ffiCall: #( int WSActivate #( void #* handler ) )
-		  module: WolframLibrary
+	^ self activateLinkHandle: self handler
+]
+
+{ #category : 'primitives' }
+WolframLink >> activateLinkHandle: handle [
+
+	<primitive: 'primitive_WSActivate' module: 'WolframPlugin'>
+	self primitiveFailed
 ]
 
 { #category : 'as yet unclassified' }
@@ -86,20 +91,30 @@ WolframLink >> doesNotUnderstand: message [
 				  ifFalse: [ super doesNotUnderstand: message ] ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'API' }
 WolframLink >> endPacket [
 
-	^ self
-		  ffiCall: #( int WSEndPacket #( void #* handler ) )
-		  module: WolframLibrary
+	^ self endPacketLinkHandle: self handler
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'primitives' }
+WolframLink >> endPacketLinkHandle: handle [
+
+	<primitive: 'primitive_WSEndPacket' module: 'WolframPlugin'>
+	self primitiveFailed
+]
+
+{ #category : 'API' }
 WolframLink >> flush [
 
-	^ self
-		  ffiCall: #( int WSFlush #( void #* handler ) )
-		  module: WolframLibrary
+	^ self flushLinkHandle: self handler
+]
+
+{ #category : 'primitives' }
+WolframLink >> flushLinkHandle: handle [
+
+	<primitive: 'primitive_WSFlush' module: 'WolframPlugin'>
+	self primitiveFailed
 ]
 
 { #category : 'expressions' }
