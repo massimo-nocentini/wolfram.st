@@ -224,9 +224,7 @@ WolframExpression >> asExportedPdfShape [
 			 "self."
 			 'PDF' }) value.
 
-	shape := (PopplerPdf new
-		          fileReference: fullName asFileReference;
-		          pages)
+	shape := fullName asFileReference asPdf pages
 		         ifEmpty: [ RSComposite new ]
 		         ifNotEmpty: [ :pages | pages first ].
 
