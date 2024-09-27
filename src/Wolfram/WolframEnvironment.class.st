@@ -42,7 +42,10 @@ WolframEnvironment >> releaseHandler [
 { #category : 'instance creation' }
 WolframEnvironment >> wolframCommandString [
 
-	^ '"wolfram -wstp -noprompt -noicon"'
+	^ Smalltalk platform isMacOSX
+		  ifTrue: [
+			  '"/Applications/Wolfram\\ Engine.app/Contents/MacOS/WolframKernel  -wstp -noprompt -noicon"' ]
+		  ifFalse: [ '"wolfram -wstp -noprompt -noicon"' ]
 ]
 
 { #category : 'as yet unclassified' }
