@@ -29,5 +29,5 @@ WolframArbitraryPrecisionNumber >> asTeXifiedShape [
 { #category : 'evaluating' }
 WolframArbitraryPrecisionNumber >> putOnLink: alink [
 
-	self subclassResponsibility
+	self arguments first putOnLink: alink
 ]

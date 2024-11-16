@@ -186,6 +186,15 @@ WolframExpression >> acceptSlotDescriptorsVisitor: aVisitor [
 	^ aVisitor visitWolframExpression: self
 ]
 
+{ #category : 'arithmetic' }
+WolframExpression >> adaptToNumber: recv andSend: selector [
+
+	^ (WolframArbitraryPrecisionNumber new
+		   link: link;
+		   arguments: { recv };
+		   yourself) perform: selector with: self
+]
+
 { #category : 'accessing' }
 WolframExpression >> arguments [
 
@@ -367,6 +376,12 @@ WolframExpression >> printOn: stream [
 		<< ')'
 ]
 
+{ #category : 'arithmetic' }
+WolframExpression >> printShowingDecimalPlaces: p [
+
+	^ self asString
+]
+
 { #category : 'evaluating' }
 WolframExpression >> putOnLink: aLink [
 
@@ -387,6 +402,12 @@ WolframExpression >> reciprocal [
 WolframExpression >> showPdfInsteadOfTeX [
 
 	showPdfInsteadOfTeX := true
+]
+
+{ #category : 'arithmetic' }
+WolframExpression >> simplify [
+
+	^ link head: 'Simplify' arguments: { self }
 ]
 
 { #category : 'evaluating' }
