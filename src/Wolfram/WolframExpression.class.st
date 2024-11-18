@@ -39,15 +39,15 @@ WolframExpression >> * exp [
 
 	^ (link head: 'Times' arguments: {
 			   self.
-			   exp }) value
+			   exp }) simplify
 ]
 
 { #category : 'visiting' }
 WolframExpression >> ** exp [
 
-	^ link head: 'Power' arguments: {
-			  self.
-			  exp }
+	^ (link head: 'Power' arguments: {
+			   self.
+			   exp }) simplify
 ]
 
 { #category : 'visiting' }
@@ -55,7 +55,7 @@ WolframExpression >> + exp [
 
 	^ (link head: 'Plus' arguments: {
 			   self.
-			   exp }) value
+			   exp }) simplify
 ]
 
 { #category : 'visiting' }
@@ -63,7 +63,7 @@ WolframExpression >> - exp [
 
 	^ (link head: 'Subtract' arguments: {
 			   self.
-			   exp }) value
+			   exp }) simplify
 ]
 
 { #category : 'visiting' }
@@ -189,10 +189,10 @@ WolframExpression >> acceptSlotDescriptorsVisitor: aVisitor [
 { #category : 'arithmetic' }
 WolframExpression >> adaptToNumber: recv andSend: selector [
 
-	^ (WolframArbitraryPrecisionNumber new
-		   link: link;
-		   arguments: { recv };
-		   yourself) perform: selector with: self
+	^ WolframArbitraryPrecisionNumber new
+		  link: link;
+		  arguments: { recv };
+		  perform: selector with: self
 ]
 
 { #category : 'accessing' }
@@ -354,7 +354,13 @@ WolframExpression >> link: anObject [
 { #category : 'arithmetic' }
 WolframExpression >> negated [
 
-	^ link head: 'Minus' arguments: { self }
+	^ (link head: 'Minus' arguments: { self }) simplify
+]
+
+{ #category : 'forms' }
+WolframExpression >> outputForm [
+
+	^ link head: 'OutputForm' arguments: { self }
 ]
 
 { #category : 'accessing' }
@@ -365,16 +371,10 @@ WolframExpression >> pattern: expr [
 			  expr }
 ]
 
-{ #category : 'evaluating' }
+{ #category : 'printing' }
 WolframExpression >> printOn: stream [
 
-	super printOn: stream.
-
-	stream
-		<< String space;
-		<< '(';
-		<< self asMathematicaPrintString;
-		<< ')'
+	stream << self holdForm toString
 ]
 
 { #category : 'arithmetic' }
@@ -394,9 +394,9 @@ WolframExpression >> putOnLink: aLink [
 { #category : 'arithmetic' }
 WolframExpression >> reciprocal [
 
-	^ link head: 'Divide' arguments: {
-			  1.
-			  self }
+	^ (link head: 'Divide' arguments: {
+			   1.
+			   self }) simplify
 ]
 
 { #category : 'accessing' }
@@ -476,6 +476,7 @@ WolframExpression >> usageString [
 WolframExpression >> value [
 
 	^ link
+		  newPacket;
 		  putFunction: 'EvaluatePacket' arity: 1;
 		  putExpression: self;
 		  endPacket;

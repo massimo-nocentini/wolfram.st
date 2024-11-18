@@ -37,3 +37,9 @@ WolframEngine class >> wsenv [
 	<primitive: 'primitive_WSInitialize' module: 'WolframPlugin'>
 	self primitiveFailed
 ]
+
+{ #category : 'see class side' }
+WolframEngine >> seeClassSide [
+
+	
+]
