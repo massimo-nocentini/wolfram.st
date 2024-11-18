@@ -37,9 +37,9 @@ WolframExpression >> && exp [
 { #category : 'visiting' }
 WolframExpression >> * exp [
 
-	^ link head: 'Times' arguments: {
-			  self.
-			  exp }
+	^ (link head: 'Times' arguments: {
+			   self.
+			   exp }) value
 ]
 
 { #category : 'visiting' }
@@ -53,17 +53,17 @@ WolframExpression >> ** exp [
 { #category : 'visiting' }
 WolframExpression >> + exp [
 
-	^ link head: 'Plus' arguments: {
-			  self.
-			  exp }
+	^ (link head: 'Plus' arguments: {
+			   self.
+			   exp }) value
 ]
 
 { #category : 'visiting' }
 WolframExpression >> - exp [
 
-	^ link head: 'Subtract' arguments: {
-			  self.
-			  exp }
+	^ (link head: 'Subtract' arguments: {
+			   self.
+			   exp }) value
 ]
 
 { #category : 'visiting' }
@@ -298,6 +298,12 @@ WolframExpression >> evaluate [
 	^ self -> self value
 ]
 
+{ #category : 'arithmetic' }
+WolframExpression >> factor [
+
+	^ (link head: 'Factor' arguments: { self }) value
+]
+
 { #category : 'converting' }
 WolframExpression >> graphics2D [
 
@@ -407,7 +413,7 @@ WolframExpression >> showPdfInsteadOfTeX [
 { #category : 'arithmetic' }
 WolframExpression >> simplify [
 
-	^ link head: 'Simplify' arguments: { self }
+	^ (link head: 'Simplify' arguments: { self }) value
 ]
 
 { #category : 'evaluating' }
