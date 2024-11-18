@@ -189,10 +189,7 @@ WolframExpression >> acceptSlotDescriptorsVisitor: aVisitor [
 { #category : 'arithmetic' }
 WolframExpression >> adaptToNumber: recv andSend: selector [
 
-	^ WolframArbitraryPrecisionNumber new
-		  link: link;
-		  arguments: { recv };
-		  perform: selector with: self
+	^ (link number: recv) perform: selector with: self
 ]
 
 { #category : 'accessing' }
@@ -242,7 +239,7 @@ WolframExpression >> asExportedPdfShape [
 		  yourself
 ]
 
-{ #category : 'converting' }
+{ #category : 'string' }
 WolframExpression >> asMathematicaPrintString [
 
 	^ self holdForm textString
@@ -268,19 +265,6 @@ WolframExpression >> asTeXifiedShape [
 		  yourself
 ]
 
-{ #category : 'reflective operations' }
-WolframExpression >> doesNotUnderstand: message [
-
-	^ link
-		  head: (message selector copyReplaceAll: ':' with: String empty)
-		  arguments: (OrderedCollection new
-				   add: self;
-				   addAll: (message arguments
-						    ifEmpty: [ Array empty ]
-						    ifNotEmpty: [ :args | args first ]);
-				   yourself)
-]
-
 { #category : 'evaluating' }
 WolframExpression >> evaluate [
 
@@ -291,6 +275,12 @@ WolframExpression >> evaluate [
 WolframExpression >> factor [
 
 	^ (link head: 'Factor' arguments: { self }) value
+]
+
+{ #category : 'arithmetic' }
+WolframExpression >> fullSimplify [
+
+	^ (link head: 'FullSimplify' arguments: { self }) value
 ]
 
 { #category : 'converting' }

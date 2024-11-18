@@ -154,6 +154,16 @@ WolframLink >> nextPacket [
 	self primitiveFailed
 ]
 
+{ #category : 'expressions' }
+WolframLink >> number: anObject [
+
+	^ WolframArbitraryPrecisionNumber new
+		  link: self;
+		  head: 'Number';
+		  arguments: { anObject };
+		  yourself
+]
+
 { #category : 'API' }
 WolframLink >> putArbitraryPrecisionNumber: s [
 
