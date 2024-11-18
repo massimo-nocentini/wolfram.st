@@ -242,30 +242,19 @@ WolframExpression >> asExportedPdfShape [
 		  yourself
 ]
 
-{ #category : 'evaluating' }
+{ #category : 'converting' }
 WolframExpression >> asMathematicaPrintString [
 
-	^ link
-		  putFunction: 'TextString' arity: 1;
-		  putFunction: 'HoldForm' arity: 1;
-		  putExpression: self;
-		  endPacket;
-		  flush;
-		  evaluate
+	^ self holdForm textString
 ]
 
 { #category : 'evaluating' }
 WolframExpression >> asTeXifiedShape [
 
 	| texContent texChunk shape |
-	texChunk := link
-		            putFunction: 'ToString' arity: 1;
-		            putFunction: 'TeXForm' arity: 1;
-		            putFunction: 'HoldForm' arity: 1;
-		            putExpression: self;
-		            endPacket;
-		            flush;
-		            evaluate.
+	texChunk := self holdForm texForm toString
+		            copyReplaceAll: '\text'
+		            with: ''.
 
 	texContent := self withStandaloneLaTeXStreamDo: [ :aStream |
 		              aStream << texChunk ].
@@ -322,6 +311,12 @@ WolframExpression >> head [
 WolframExpression >> head: anObject [
 
 	head := anObject
+]
+
+{ #category : 'forms' }
+WolframExpression >> holdForm [
+
+	^ link head: 'HoldForm' arguments: { self }
 ]
 
 { #category : 'evaluating' }
@@ -447,6 +442,24 @@ WolframExpression >> standaloneLatexPreamble [
 \ExplSyntaxOff
 \begin{document}
 \(\displaystyle '
+]
+
+{ #category : 'forms' }
+WolframExpression >> texForm [
+
+	^ link head: 'TeXForm' arguments: { self }
+]
+
+{ #category : 'converting' }
+WolframExpression >> textString [
+
+	^ (link head: 'TextString' arguments: { self }) value
+]
+
+{ #category : 'converting' }
+WolframExpression >> toString [
+
+	^ (link head: 'ToString' arguments: { self }) value
 ]
 
 { #category : 'accessing' }
