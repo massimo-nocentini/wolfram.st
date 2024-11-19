@@ -1,1 +1,1 @@
-Package { #name : #'Wolfram-Tests' }
+Package { #name : 'Wolfram-Tests' }

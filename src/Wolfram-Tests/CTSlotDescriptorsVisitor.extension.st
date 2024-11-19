@@ -1,6 +1,6 @@
-Extension { #name : #CTSlotDescriptorsVisitor }
+Extension { #name : 'CTSlotDescriptorsVisitor' }
 
-{ #category : #'*Wolfram-Tests' }
+{ #category : '*Wolfram-Tests' }
 CTSlotDescriptorsVisitor >> visitTestCaseExecution: exec [
 
 	^ {

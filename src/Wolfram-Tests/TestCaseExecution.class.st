@@ -1,44 +1,45 @@
 Class {
-	#name : #TestCaseExecution,
-	#superclass : #Object,
+	#name : 'TestCaseExecution',
+	#superclass : 'Object',
 	#instVars : [
 		'compiledMethod',
 		'receiver'
 	],
-	#category : #'Wolfram-Tests'
+	#category : 'Wolfram-Tests',
+	#package : 'Wolfram-Tests'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 TestCaseExecution >> acceptSlotDescriptorsVisitor: visitor [
 
 	^ visitor visitTestCaseExecution: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestCaseExecution >> compiledMethod [
 
 	^ compiledMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestCaseExecution >> compiledMethod: anObject [
 
 	compiledMethod := anObject
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 TestCaseExecution >> evaluate [
 
 	^ self compiledMethod valueWithReceiver: self receiver
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestCaseExecution >> receiver [
 
 	^ receiver
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestCaseExecution >> receiver: anObject [
 
 	receiver := anObject
