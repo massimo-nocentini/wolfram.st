@@ -21,7 +21,7 @@ WolframEnvironment >> initialize [
 ]
 
 { #category : 'instance creation' }
-WolframEnvironment >> newLink [
+WolframEnvironment >> openLink [
 
 	| handle |
 	handle := self
@@ -30,6 +30,7 @@ WolframEnvironment >> newLink [
 
 	^ WolframLink new
 		  handler: handle;
+		  activate;
 		  yourself
 ]
 
@@ -41,6 +42,10 @@ WolframEnvironment >> releaseHandler [
 
 { #category : 'instance creation' }
 WolframEnvironment >> wolframOpenString [
+	"See also the [official doc page](https://reference.wolfram.com/language/tutorial/WSTPDeveloperGuide-Macintosh.html#594), where the program is invoked as: 
+	
+	`factor -linkmode launch -linkname '""/Applications/Mathematica.app/Contents/MacOS/WolframKernel"" -wstp'`
+	"
 
 	^ String streamContents: [ :aStream |
 		  aStream

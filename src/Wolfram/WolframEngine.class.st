@@ -16,9 +16,7 @@ WolframEngine class >> link [
 		  ifTrue: [
 			  Env := WolframEnvironment new.
 
-			  Link := Env newLink
-				          activate;
-				          yourself ]
+			  Link := Env openLink ]
 		  ifFalse: [
 			  Link releaseHandler.
 			  Env releaseHandler.
