@@ -22,10 +22,11 @@ WolframEnvironment >> envHandle: envHandle openString: str [
 { #category : 'instance creation' }
 WolframEnvironment >> newLinkOpenString [
 
-	| handle |
-	handle := self wsOpenString:
-		          'pharo -linkmode launch -linkname '
-		          , self wolframCommandString.
+	| handle string |
+	string := 'pharo -linkmode launch -linkname '
+	          , self wolframCommandString.
+
+	handle := self envHandle: self handler openString: string.
 
 	^ WolframLink basicNew
 		  handler: handle;
@@ -33,7 +34,7 @@ WolframEnvironment >> newLinkOpenString [
 		  yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'resources' }
 WolframEnvironment >> releaseHandler [
 
 	^ self deinitializeHandle: self handler
@@ -46,10 +47,4 @@ WolframEnvironment >> wolframCommandString [
 		  ifTrue: [
 			  '"/Applications/Wolfram\\ Engine.app/Contents/MacOS/WolframKernel  -wstp -noprompt -noicon"' ]
 		  ifFalse: [ '"wolfram -wstp -noprompt -noicon"' ]
-]
-
-{ #category : 'as yet unclassified' }
-WolframEnvironment >> wsOpenString: str [
-
-	^ self envHandle: self handler openString: str
 ]
