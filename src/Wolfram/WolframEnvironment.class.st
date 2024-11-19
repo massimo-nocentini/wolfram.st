@@ -5,32 +5,31 @@ Class {
 	#package : 'Wolfram'
 }
 
-{ #category : 'primitives' }
+{ #category : 'primitives - WSTP' }
 WolframEnvironment >> deinitializeHandle: handle [
 
 	<primitive: 'primitive_WSDeinitialize' module: 'WolframPlugin'>
 	self primitiveFailed
 ]
 
-{ #category : 'primitives' }
-WolframEnvironment >> envHandle: envHandle openString: str [
+{ #category : 'initialization' }
+WolframEnvironment >> initialize [
 
-	<primitive: 'primitive_WSOpenString' module: 'WolframPlugin'>
-	self primitiveFailed
+	super initialize.
+
+	self handler: self wsInitialize
 ]
 
 { #category : 'instance creation' }
-WolframEnvironment >> newLinkOpenString [
+WolframEnvironment >> newLink [
 
-	| handle string |
-	string := 'pharo -linkmode launch -linkname '
-	          , self wolframCommandString.
+	| handle |
+	handle := self
+		          wsOpenString: self wolframOpenString
+		          environmentHandle: self handler.
 
-	handle := self envHandle: self handler openString: string.
-
-	^ WolframLink basicNew
+	^ WolframLink new
 		  handler: handle;
-		  initialize;
 		  yourself
 ]
 
@@ -41,10 +40,25 @@ WolframEnvironment >> releaseHandler [
 ]
 
 { #category : 'instance creation' }
-WolframEnvironment >> wolframCommandString [
+WolframEnvironment >> wolframOpenString [
 
-	^ Smalltalk platform isMacOSX
-		  ifTrue: [
-			  '"/Applications/Wolfram\\ Engine.app/Contents/MacOS/WolframKernel  -wstp -noprompt -noicon"' ]
-		  ifFalse: [ '"wolfram -wstp -noprompt -noicon"' ]
+	^ String streamContents: [ :aStream |
+		  aStream
+			  << 'pharo -linkmode launch -linkname "';
+			  << Smalltalk platform wolframEngineExecutableFileName;
+			  << ' -wstp -noprompt -noicon"' ]
+]
+
+{ #category : 'primitives - WSTP' }
+WolframEnvironment >> wsInitialize [
+
+	<primitive: 'primitive_WSInitialize' module: 'WolframPlugin'>
+	^ ExternalAddress null
+]
+
+{ #category : 'primitives - WSTP' }
+WolframEnvironment >> wsOpenString: str environmentHandle: envHandle [
+
+	<primitive: 'primitive_WSOpenString' module: 'WolframPlugin'>
+	self primitiveFailed
 ]

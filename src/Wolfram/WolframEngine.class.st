@@ -14,12 +14,9 @@ WolframEngine class >> link [
 
 	^ (Env isNil or: [ Link isNil ])
 		  ifTrue: [
-			  Env := WolframEnvironment basicNew
-				         handler: self wsenv;
-				         initialize;
-				         yourself.
+			  Env := WolframEnvironment new.
 
-			  Link := Env newLinkOpenString
+			  Link := Env newLink
 				          activate;
 				          yourself ]
 		  ifFalse: [
@@ -29,13 +26,6 @@ WolframEngine class >> link [
 			  Link := Env := nil.
 
 			  self link ]
-]
-
-{ #category : 'primitives' }
-WolframEngine class >> wsenv [
-
-	<primitive: 'primitive_WSInitialize' module: 'WolframPlugin'>
-	self primitiveFailed
 ]
 
 { #category : 'see class side' }

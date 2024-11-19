@@ -37,7 +37,7 @@ WolframLink >> _ [
 	^ self head: 'Blank' arguments: {  }
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'visiting' }
 WolframLink >> acceptSlotDescriptorsVisitor: visitor [
 
 	^ visitor visitWolframLink: self
