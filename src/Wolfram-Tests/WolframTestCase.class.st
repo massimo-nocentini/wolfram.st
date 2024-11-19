@@ -12,7 +12,7 @@ Class {
 	#package : 'Wolfram-Tests'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'utilities' }
 WolframTestCase >> executionOfSelector: selector [
 
 	^ TestCaseExecution new
