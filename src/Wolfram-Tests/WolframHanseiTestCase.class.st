@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : 'tests' }
-WolframHanseiTestCase >> testDrunkCoinModelWolfram [
+WolframHanseiTestCase >> testDrunkCoinModel [
 
 	| tree values pair dl dp |
 	dl := link symbol: #l.
@@ -32,10 +32,9 @@ WolframHanseiTestCase >> testDrunkCoinModelWolfram [
 ]
 
 { #category : 'tests' }
-WolframHanseiTestCase >> testGrassModelWolfram [
+WolframHanseiTestCase >> testGrassModel [
 
 	| tree values pair r s g f u tot |
-	"Some symbols:"
 	r := link symbol: #r.
 	s := link symbol: #s.
 	g := link symbol: #g.
