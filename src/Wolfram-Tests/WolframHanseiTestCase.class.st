@@ -34,7 +34,7 @@ WolframHanseiTestCase >> testDrunkCoinModelWolfram [
 { #category : 'tests' }
 WolframHanseiTestCase >> testGrassModelWolfram [
 
-	| tree values pair r s g f u |
+	| tree values pair r s g f u tot |
 	"Some symbols:"
 	r := link symbol: #r.
 	s := link symbol: #s.
@@ -61,5 +61,15 @@ WolframHanseiTestCase >> testGrassModelWolfram [
 		assert: (values at: false) simplify asString
 		equals: '(-1 + r) (f s (-1 + u) - u)'.
 
-	self assert: pair second size equals: 0
+	self assert: pair second size equals: 0.
+
+	tot := ((values at: true) + (values at: false)) simplify.
+
+	self
+		exportSlotsGraphOf: ((values at: true) / tot) factor
+		pathSuffix: 'true'.
+
+	self
+		exportSlotsGraphOf: ((values at: false) / tot) factor
+		pathSuffix: 'false'
 ]

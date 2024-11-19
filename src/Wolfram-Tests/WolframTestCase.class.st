@@ -4,6 +4,8 @@ A WolframExpressionTest is a test class for testing the behavior of WolframExpre
 Class {
 	#name : 'WolframTestCase',
 	#superclass : 'TestCase',
+	#traits : 'TIceImagesExporting',
+	#classTraits : 'TIceImagesExporting classTrait',
 	#instVars : [
 		'environment',
 		'link'
