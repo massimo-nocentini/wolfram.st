@@ -112,6 +112,15 @@ WolframExpression >> <-| exp [
 	^ exp |-> self
 ]
 
+{ #category : 'comparing' }
+WolframExpression >> = anObject [
+	"Answer whether the receiver and anObject represent the same object."
+
+	self == anObject ifTrue: [ ^ true ].
+	self class = anObject class ifFalse: [ ^ false ].
+	^ head = anObject head and: [ arguments = anObject arguments ]
+]
+
 { #category : 'visiting' }
 WolframExpression >> === exp [
 
@@ -289,6 +298,13 @@ WolframExpression >> graphics2D [
 	^ (link head: 'Graphics' arguments: { self })
 		  showPdfInsteadOfTeX;
 		  yourself
+]
+
+{ #category : 'comparing' }
+WolframExpression >> hash [
+	"Answer an integer value that is related to the identity of the receiver."
+
+	^ head hash bitXor: arguments hash
 ]
 
 { #category : 'accessing' }
