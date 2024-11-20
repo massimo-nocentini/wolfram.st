@@ -11,8 +11,8 @@ Class {
 WolframHanseiTestCase >> testDrunkCoinModel [
 
 	| tree values pair dl dp |
-	dl := link symbol: #l.
-	dp := link symbol: #d.
+	dl := #l asWolframExpression: link.
+	dp := #d asWolframExpression: link.
 
 	tree := [ self drunkCoin: 10 drunkProb: dp lostProb: dl ] hansei.
 
@@ -35,11 +35,11 @@ WolframHanseiTestCase >> testDrunkCoinModel [
 WolframHanseiTestCase >> testGrassModel [
 
 	| tree values pair r s g f u tot |
-	r := link symbol: #r.
-	s := link symbol: #s.
-	g := link symbol: #g.
-	f := link symbol: #f.
-	u := link symbol: #u.
+	r := #r asWolframExpression: link.
+	s := #s asWolframExpression: link.
+	g := #g asWolframExpression: link.
+	f := #f asWolframExpression: link.
+	u := #u asWolframExpression: link.
 
 	tree := [
 	        self
