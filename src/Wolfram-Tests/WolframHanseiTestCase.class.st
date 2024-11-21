@@ -106,3 +106,34 @@ WolframHanseiTestCase >> testGrassModel [
 		exportSlotsGraphOf: ((values at: false) / tot) factor
 		pathSuffix: 'false'
 ]
+
+{ #category : 'tests' }
+WolframHanseiTestCase >> testGrassModelCloud [
+
+	| tree mean r s c u |
+	r := #r asWolframExpression: link.
+	s := #s asWolframExpression: link.
+	c := #c asWolframExpression: link.
+	u := #u asWolframExpression: link.
+
+	tree := [
+	        self
+		        grassModelWithCloud: c
+		        rain: r
+		        sprinkler: s
+		        otherwise: u ] hansei.
+
+	mean := tree inferenceExact mean.
+
+	self
+		assert: (mean at: true) simplify asMathematicaPrintString
+		equals:
+		'Times[r, Power[Plus[s, Times[r, Plus[-1, s], Plus[-1, u]], u, Times[-1, s, u]], -1]]'.
+
+	self
+		assert: (mean at: false) simplify asMathematicaPrintString
+		equals:
+		'Times[Plus[-1, r], Plus[Times[s, Plus[-1, u]], Times[-1, u]], Power[Plus[s, Times[r, Plus[-1, s], Plus[-1, u]], u, Times[-1, s, u]], -1]]'.
+
+	^ mean
+]

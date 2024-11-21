@@ -8,30 +8,38 @@ Class {
 { #category : 'tests' }
 WolframCoreTestCase >> testBinomial [
 
-	| y z x p bin |
+	| y z x p dist |
 	x := #x asWolframExpression: link.
 	y := #y asWolframExpression: link.
 	z := #z asWolframExpression: link.
 	p := #p asWolframExpression: link.
 
-	bin := {
-		       x.
-		       y.
-		       z } binomial: p asWolframExpression: link.
+	dist := {
+		        x.
+		        y.
+		        z } binomial: p asWolframExpression: link.
 
-	^ bin
+	self assert: (dist at: x) equals: 3 * (p - 1 ** 2) * p.
+	self assert: (dist at: y) equals: -3 * (p - 1) * (p ** 2).
+	self assert: (dist at: z) equals: p ** 3.
+
+	^ dist
 ]
 
 { #category : 'tests' }
 WolframCoreTestCase >> testFactor [
 
-	| x |
+	| x factored |
 	x := #x asWolframExpression: link.
 
+	factored := (x ** 6 - 1) factor.
+
 	self
-		assert: (x ** 6 - 1) factor
+		assert: factored
 		equals:
-		(x - 1 * (x + 1) * (1 - x + (x ** 2)) * (1 + x + (x ** 2))) factor
+		(x - 1 * (x + 1) * (1 - x + (x ** 2)) * (1 + x + (x ** 2))) factor.
+
+	^ factored
 ]
 
 { #category : 'tests' }
