@@ -198,7 +198,7 @@ WolframExpression >> acceptSlotDescriptorsVisitor: aVisitor [
 { #category : 'arithmetic' }
 WolframExpression >> adaptToNumber: recv andSend: selector [
 
-	^ (link number: recv) perform: selector with: self
+	^ (recv asWolframExpression: link) perform: selector with: self
 ]
 
 { #category : 'accessing' }
@@ -272,6 +272,22 @@ WolframExpression >> asTeXifiedShape [
 	^ shape
 		  model: self;
 		  yourself
+]
+
+{ #category : 'as yet unclassified' }
+WolframExpression >> binomial: k [
+
+	^ link head: 'Binomial' arguments: {
+			  self.
+			  k }
+]
+
+{ #category : 'as yet unclassified' }
+WolframExpression >> binomialDistribution: p [
+
+	^ link head: 'BinomialDistribution' arguments: {
+			  self.
+			  p }
 ]
 
 { #category : 'evaluating' }

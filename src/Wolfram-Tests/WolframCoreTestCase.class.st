@@ -6,6 +6,23 @@ Class {
 }
 
 { #category : 'tests' }
+WolframCoreTestCase >> testBinomial [
+
+	| y z x p bin |
+	x := #x asWolframExpression: link.
+	y := #y asWolframExpression: link.
+	z := #z asWolframExpression: link.
+	p := #p asWolframExpression: link.
+
+	bin := {
+		       x.
+		       y.
+		       z } binomial: p wolfram: link.
+
+	self exportSlotsGraphOf: bin
+]
+
+{ #category : 'tests' }
 WolframCoreTestCase >> testFactor [
 
 	| x |
