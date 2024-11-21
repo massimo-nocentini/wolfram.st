@@ -303,6 +303,12 @@ WolframExpression >> factor [
 ]
 
 { #category : 'arithmetic' }
+WolframExpression >> factorInteger [
+
+	^ (link head: 'FactorInteger' arguments: { self }) value
+]
+
+{ #category : 'arithmetic' }
 WolframExpression >> fullSimplify [
 
 	^ (link head: 'FullSimplify' arguments: { self }) value

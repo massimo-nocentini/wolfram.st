@@ -128,12 +128,12 @@ WolframHanseiTestCase >> testGrassModelCloud [
 	self
 		assert: (mean at: true) simplify asMathematicaPrintString
 		equals:
-		'Times[r, Power[Plus[s, Times[r, Plus[-1, s], Plus[-1, u]], u, Times[-1, s, u]], -1]]'.
+		'Times[Plus[-1, c, r, Times[-2, c, r]], Power[Plus[-1, Times[c, Plus[-1, r, s], Plus[-1, u]], Times[r, Plus[s, Times[-1, s, u]]]], -1]]'.
 
 	self
 		assert: (mean at: false) simplify asMathematicaPrintString
 		equals:
-		'Times[Plus[-1, r], Plus[Times[s, Plus[-1, u]], Times[-1, u]], Power[Plus[s, Times[r, Plus[-1, s], Plus[-1, u]], u, Times[-1, s, u]], -1]]'.
+		'Times[Power[Plus[1, Times[r, s, Plus[-1, u]], Times[-1, c, Plus[-1, r, s], Plus[-1, u]]], -1], Plus[Times[c, Plus[s, u, Times[-1, s, u]]], Times[-1, r, Plus[-1, c, s, Times[c, u], Times[-1, s, u]]]]]'.
 
 	^ mean
 ]
