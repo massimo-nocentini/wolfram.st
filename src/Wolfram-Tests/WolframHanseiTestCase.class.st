@@ -8,6 +8,22 @@ Class {
 }
 
 { #category : 'tests' }
+WolframHanseiTestCase >> testBernoulli [
+
+	| tree values pair p |
+	p := #p asWolframExpression: link.
+	tree := [ true bernoulli: p ] hansei.
+
+	pair := tree inferenceExact asValuesDictionary.
+	values := pair first.
+
+	self
+		assert: (values at: true) equals: p;
+		assert: (values at: false) equals: 1 - p;
+		assert: pair second size equals: 0
+]
+
+{ #category : 'tests' }
 WolframHanseiTestCase >> testDrunkCoinModel [
 
 	| tree values pair dl dp |

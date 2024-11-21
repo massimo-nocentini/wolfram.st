@@ -56,21 +56,6 @@ WolframLink >> activateLinkHandle: handle [
 	self primitiveFailed
 ]
 
-{ #category : 'reflective operations' }
-WolframLink >> doesNotUnderstand: message [
-
-	| selector |
-	selector := message selector.
-
-	^ (selector beginsWith: '_')
-		  ifTrue: [ self symbol: selector allButFirst asSymbol ]
-		  ifFalse: [
-			  (message numArgs = 1 and: [ message argument isCollection ])
-				  ifTrue: [
-				  self head: selector allButLast arguments: message argument ]
-				  ifFalse: [ super doesNotUnderstand: message ] ]
-]
-
 { #category : 'API' }
 WolframLink >> endPacket [
 
@@ -225,6 +210,6 @@ WolframLink >> symbol: sym [
 	^ WolframSymbolExpression new
 		  link: self;
 		  head: 'Symbol';
-		  arguments: { sym };
+		  arguments: { sym asString };
 		  yourself
 ]

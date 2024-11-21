@@ -8,5 +8,5 @@ Class {
 { #category : 'evaluating' }
 WolframSymbolExpression >> putOnLink: aLink [
 
-	self arguments first putOnLink: aLink
+	aLink putSymbol: self arguments first
 ]
