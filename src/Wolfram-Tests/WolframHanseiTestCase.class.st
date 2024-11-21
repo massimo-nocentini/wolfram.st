@@ -27,15 +27,20 @@ WolframHanseiTestCase >> testBernoulli [
 WolframHanseiTestCase >> testCatalanParens [
 
 	| tree avg e p |
+	self timeLimit: 30 seconds.
+	
 	e := #e asWolframExpression: link.
 	p := #p asWolframExpression: link.
 
 	tree := [ self catalanParens: e pickProb: p ] hansei.
 	avg := (tree inferenceUpToDepth: 10) average.
-	"	avg associations timsort: [ :each | each key size ]."
+
 	self assert: avg size equals: 8.
 	self assert: (avg at: '') equals: e.
-	self assert: (avg at: '()') equals: 1 - e * e
+	self assert: (avg at: '()') equals: e * (1 - e).
+	self assert: (avg at: '()(())') equals: e - 1 ** 3 * e * p * (p - 1).
+
+	self exportSlotsGraphOf: avg
 ]
 
 { #category : 'tests' }
