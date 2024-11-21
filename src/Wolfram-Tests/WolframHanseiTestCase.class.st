@@ -28,7 +28,7 @@ WolframHanseiTestCase >> testCatalanParens [
 
 	| tree avg e p |
 	self timeLimit: 30 seconds.
-	
+
 	e := #e asWolframExpression: link.
 	p := #p asWolframExpression: link.
 
@@ -40,7 +40,7 @@ WolframHanseiTestCase >> testCatalanParens [
 	self assert: (avg at: '()') equals: e * (1 - e).
 	self assert: (avg at: '()(())') equals: e - 1 ** 3 * e * p * (p - 1).
 
-	self exportSlotsGraphOf: avg
+	^ avg
 ]
 
 { #category : 'tests' }
