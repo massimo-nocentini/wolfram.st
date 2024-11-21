@@ -24,6 +24,21 @@ WolframHanseiTestCase >> testBernoulli [
 ]
 
 { #category : 'tests' }
+WolframHanseiTestCase >> testCatalanParens [
+
+	| tree avg e p |
+	e := #e asWolframExpression: link.
+	p := #p asWolframExpression: link.
+
+	tree := [ self catalanParens: e pickProb: p ] hansei.
+	avg := (tree inferenceUpToDepth: 10) average.
+	"	avg associations timsort: [ :each | each key size ]."
+	self assert: avg size equals: 8.
+	self assert: (avg at: '') equals: e.
+	self assert: (avg at: '()') equals: 1 - e * e
+]
+
+{ #category : 'tests' }
 WolframHanseiTestCase >> testDrunkCoinModel [
 
 	| tree values pair dl dp |

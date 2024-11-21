@@ -29,9 +29,9 @@ WolframExpression >> & recvBlock [
 { #category : 'visiting' }
 WolframExpression >> && exp [
 
-	^ link head: 'And' arguments: {
-			  self.
-			  exp }
+	^ (link head: 'And' arguments: {
+			   self.
+			   exp }) simplify
 ]
 
 { #category : 'visiting' }
@@ -69,9 +69,9 @@ WolframExpression >> - exp [
 { #category : 'visiting' }
 WolframExpression >> / exp [
 
-	^ link head: 'Divide' arguments: {
-			  self.
-			  exp }
+	^ (link head: 'Divide' arguments: {
+			   self.
+			   exp }) simplify
 ]
 
 { #category : 'visiting' }
