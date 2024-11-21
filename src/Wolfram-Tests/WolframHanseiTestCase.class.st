@@ -27,8 +27,6 @@ WolframHanseiTestCase >> testBernoulli [
 WolframHanseiTestCase >> testCatalanParens [
 
 	| tree avg e p |
-	self timeLimit: 30 seconds.
-
 	e := #e asWolframExpression: link.
 	p := #p asWolframExpression: link.
 
