@@ -6,6 +6,18 @@ Class {
 }
 
 { #category : 'tests' }
+WolframCoreTestCase >> testFactor [
+
+	| x |
+	x := #x asWolframExpression: link.
+
+	self
+		assert: (x ** 6 - 1) factor
+		equals:
+		(x - 1 * (x + 1) * (1 - x + (x ** 2)) * (1 + x + (x ** 2))) factor
+]
+
+{ #category : 'tests' }
 WolframCoreTestCase >> testSymbol [
 
 	| expr x |
