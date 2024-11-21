@@ -274,7 +274,7 @@ WolframExpression >> asTeXifiedShape [
 		  yourself
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'manipulation' }
 WolframExpression >> binomial: k [
 
 	^ link head: 'Binomial' arguments: {
@@ -282,7 +282,7 @@ WolframExpression >> binomial: k [
 			  k }
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'manipulation' }
 WolframExpression >> binomialDistribution: p [
 
 	^ link head: 'BinomialDistribution' arguments: {
@@ -306,6 +306,12 @@ WolframExpression >> factor [
 WolframExpression >> fullSimplify [
 
 	^ (link head: 'FullSimplify' arguments: { self }) value
+]
+
+{ #category : 'manipulation' }
+WolframExpression >> functionExpand [
+
+	^ link head: 'FunctionExpand' arguments: { self }
 ]
 
 { #category : 'converting' }

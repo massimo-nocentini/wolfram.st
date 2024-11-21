@@ -17,9 +17,9 @@ WolframCoreTestCase >> testBinomial [
 	bin := {
 		       x.
 		       y.
-		       z } binomial: p wolfram: link.
+		       z } binomial: p asWolframExpression: link.
 
-	self exportSlotsGraphOf: bin
+	^ bin
 ]
 
 { #category : 'tests' }
