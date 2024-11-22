@@ -60,7 +60,7 @@ WolframHanseiTestCase >> testDrunkCoinModel [
 	self
 		assert: (values at: false) asMathematicaPrintString
 		equals:
-		'Times[Plus[-1, d], Plus[-1, l], Plus[1, Times[d, Plus[-1, l], Plus[-1, Times[d, Plus[-1, l], Plus[1, Times[d, Plus[-1, l], Plus[-1, Times[d, Plus[-1, l], Plus[1, Times[d, Plus[-1, l], Plus[-1, Times[d, Plus[-1, l], Plus[1, Times[d, Plus[-1, l], Plus[-1, Times[d, Plus[-1, l], Plus[1, d, Times[-1, d, l]]]]]]]]]]]]]]]]]]]'.
+		'Times[Plus[-1, d], Plus[-1, l], Plus[1, d, Times[Power[d, 2], Power[Plus[-1, l], 2]], Times[-1, Power[d, 3], Power[Plus[-1, l], 3]], Times[Power[d, 4], Power[Plus[-1, l], 4]], Times[-1, Power[d, 5], Power[Plus[-1, l], 5]], Times[Power[d, 6], Power[Plus[-1, l], 6]], Times[-1, Power[d, 7], Power[Plus[-1, l], 7]], Times[Power[d, 8], Power[Plus[-1, l], 8]], Times[-1, Power[d, 9], Power[Plus[-1, l], 9]], Times[-1, d, l]]]'.
 
 	self assert: pair second size equals: 0
 ]

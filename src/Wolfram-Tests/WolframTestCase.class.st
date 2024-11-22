@@ -37,6 +37,6 @@ WolframTestCase >> tearDown [
 
 	super tearDown.
 
-	link releaseHandler.
-	environment releaseHandler
+	link ifNotNil: #releaseHandler.
+	environment ifNotNil: #releaseHandler
 ]
