@@ -18,8 +18,8 @@ WolframEngine class >> link [
 
 			  Link := Env openLink ]
 		  ifFalse: [
-			  Link releaseHandler.
-			  Env releaseHandler.
+			  Link handler isNull ifFalse: [ Link releaseHandler ].
+			  Env handler isNull ifFalse: [ Env releaseHandler ].
 
 			  Link := Env := nil.
 
