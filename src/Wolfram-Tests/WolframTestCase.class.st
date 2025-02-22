@@ -35,8 +35,8 @@ WolframTestCase >> setUp [
 { #category : 'running' }
 WolframTestCase >> tearDown [
 
-	super tearDown.
+	link ifNotNil: [ :l | l releaseHandler ].
+	environment ifNotNil: [ :l | l releaseHandler ].
 
-	link ifNotNil: #releaseHandler.
-	environment ifNotNil: #releaseHandler
+	super tearDown
 ]
