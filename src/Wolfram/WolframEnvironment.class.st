@@ -44,7 +44,9 @@ WolframEnvironment >> releaseHandler [
 WolframEnvironment >> wolframOpenString [
 	"See also the [official doc page](https://reference.wolfram.com/language/tutorial/WSTPDeveloperGuide-Macintosh.html#594), where the program is invoked as: 
 	
-	`factor -linkmode launch -linkname '""/Applications/Mathematica.app/Contents/MacOS/WolframKernel"" -wstp'`
+	```
+	factor -linkmode launch -linkname '""/Applications/Mathematica.app/Contents/MacOS/WolframKernel"" -wstp'
+	```
 	"
 
 	^ String streamContents: [ :aStream |
@@ -52,6 +54,20 @@ WolframEnvironment >> wolframOpenString [
 			  << 'pharo -linkmode launch -linkname "';
 			  << Smalltalk platform wolframEngineExecutableFileName;
 			  << ' -wstp -noprompt -noicon"' ]
+]
+
+{ #category : 'instance creation' }
+WolframEnvironment >> wolframOpenStringLinkConnect [
+	"See also the [official doc page](https://reference.wolfram.com/language/tutorial/RunningTheWolframSystemFromWithinAnExternalProgram.html) and in the [introduction to `WSTPServer`](https://reference.wolfram.com/language/tutorial/IntroductionToWSTPServer.html#1601480540), where the program is invoked as: 
+	
+	```
+	-linkmode connect -linkname 31415 -linkprotocol TCPIP -linkoptions 4
+	```
+	
+	This is more suitable when you want to connect to an already running server.
+	"
+
+	^ 'pharo -linkmode connect -linkname 8081 -linkprotocol TCPIP -linkoptions 4'
 ]
 
 { #category : 'primitives - WSTP' }
