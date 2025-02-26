@@ -43,6 +43,12 @@ WolframCoreTestCase >> testFactor [
 ]
 
 { #category : 'tests' }
+WolframCoreTestCase >> testLinkName [
+
+	self assert: link name equals: '8081@192.168.1.101'
+]
+
+{ #category : 'tests' }
 WolframCoreTestCase >> testSymbol [
 
 	| expr x |

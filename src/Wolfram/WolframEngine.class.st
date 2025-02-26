@@ -33,6 +33,12 @@ WolframEngine class >> link [
 			  self link ]
 ]
 
+{ #category : 'accessing' }
+WolframEngine class >> newLink [
+
+	^ WolframEnvironment new openLink
+]
+
 { #category : 'see class side' }
 WolframEngine >> seeClassSide [
 

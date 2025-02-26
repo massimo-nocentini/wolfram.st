@@ -25,7 +25,7 @@ WolframEnvironment >> openLink [
 
 	| handle |
 	handle := self
-		          wsOpenString: self wolframOpenString
+		          wsOpenString: self wolframOpenStringLinkConnect 
 		          environmentHandle: self handler.
 
 	^ WolframLink new
