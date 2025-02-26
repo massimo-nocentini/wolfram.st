@@ -39,6 +39,18 @@ WolframEngine class >> newLink [
 	^ WolframEnvironment new openLink
 ]
 
+{ #category : 'accessing' }
+WolframEngine class >> withLinkDo: aBlock [
+
+	| env link |
+	env := WolframEnvironment new.
+	link := env openLink.
+
+	^ [ aBlock value: link ] ensure: [
+		  link releaseHandler.
+		  env releaseHandler ]
+]
+
 { #category : 'see class side' }
 WolframEngine >> seeClassSide [
 

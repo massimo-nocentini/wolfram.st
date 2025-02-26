@@ -37,7 +37,9 @@ WolframEnvironment >> openLink [
 { #category : 'resources' }
 WolframEnvironment >> releaseHandler [
 
-	^ self deinitializeHandle: self handler
+	self deinitializeHandle: self handler.
+
+	super releaseHandler
 ]
 
 { #category : 'instance creation' }

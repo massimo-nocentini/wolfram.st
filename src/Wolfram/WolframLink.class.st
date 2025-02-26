@@ -56,6 +56,13 @@ WolframLink >> activateLinkHandle: handle [
 	self primitiveFailed
 ]
 
+{ #category : 'resources' }
+WolframLink >> close [
+
+	<primitive: 'primitive_WSClose' module: 'WolframPlugin'>
+	self primitiveFailed
+]
+
 { #category : 'API' }
 WolframLink >> endPacket [
 
@@ -200,8 +207,9 @@ WolframLink >> putSymbol: s [
 { #category : 'resources' }
 WolframLink >> releaseHandler [
 
-	<primitive: 'primitive_WSClose' module: 'WolframPlugin'>
-	self primitiveFailed
+	self close.
+
+	super releaseHandler
 ]
 
 { #category : 'expressions' }
