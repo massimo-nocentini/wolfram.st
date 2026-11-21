@@ -275,6 +275,9 @@ WolframExpression >> asTeXifiedShape [
 			, texFile parent fullName , ' ' , texFile fullName
 		writeStream: Smalltalk tools transcript.
 
+	#( 'tex' 'aux' 'log' ) do: [ :each |
+		(texFile withExtension: each) ensureDelete ].
+
 	pdfFile := texFile withExtension: 'pdf'.
 
 	shape := pdfFile exists
