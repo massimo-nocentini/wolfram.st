@@ -5,6 +5,6 @@ Bindings to the [Wolfram Engine's C interface](https://reference.wolfram.com/lan
 ```smalltalk
 Metacello new
     baseline: 'Wolfram';
-    repository: 'github://massimo-nocentini/wolfram.st';
+    repository: 'github://massimo-nocentini/wolfram.st:master/src';
     load
 ```

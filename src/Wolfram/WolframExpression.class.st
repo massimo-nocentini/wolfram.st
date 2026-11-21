@@ -256,8 +256,9 @@ WolframExpression >> asMathematicaPrintString [
 
 { #category : 'evaluating' }
 WolframExpression >> asTeXifiedShape [
+	"Typeset my TeXForm with xelatex and answer the first page of the PDF as a Roassal shape (LibPoppler-Roassal)."
 
-	| texContent texChunk shape |
+	| texContent texChunk texFile pdfFile shape |
 	texChunk := self holdForm texForm toString
 		            copyReplaceAll: '\text'
 		            with: ''.
@@ -265,9 +266,23 @@ WolframExpression >> asTeXifiedShape [
 	texContent := self withStandaloneLaTeXStreamDo: [ :aStream |
 		              aStream << texChunk ].
 
-	shape := (PopplerPdf compileTeX: texContent times: 1) pages
-		         ifEmpty: [ RSComposite new ]
-		         ifNotEmpty: [ :pages | pages first ].
+	texFile := FileReference newTempFilePrefix: 'WolframTeX-' suffix: '.tex'.
+	texFile writeStreamDo: [ :aStream |
+		aStream << texContent withUnixLineEndings ].
+
+	LibC uniqueInstance
+		pipe: 'xelatex -halt-on-error -output-directory='
+			, texFile parent fullName , ' ' , texFile fullName
+		writeStream: Smalltalk tools transcript.
+
+	pdfFile := texFile withExtension: 'pdf'.
+
+	shape := pdfFile exists
+		         ifTrue: [
+			         (PopplerDocument fromFile: pdfFile) asRoassalShapes
+				         ifEmpty: [ RSComposite new ]
+				         ifNotEmpty: [ :pages | pages first ] ]
+		         ifFalse: [ RSComposite new ].
 
 	^ shape
 		  model: self;

@@ -10,6 +10,22 @@ BaselineOfWolfram >> baseline: spec [
 	<baseline>
 	spec for: #common do: [
 		spec
-			package: 'Wolfram';
-			package: 'Wolfram-Tests' ]
+			baseline: 'ContainersEssentials'
+			with: [
+			spec repository: 'github://massimo-nocentini/Containers-Essentials:master' ].
+
+		spec
+			baseline: 'LibPoppler'
+			with: [
+			spec repository: 'github://massimo-nocentini/libpoppler.st:master/src' ].
+
+		spec
+			baseline: 'Delimcc'
+			with: [ spec repository: 'github://massimo-nocentini/delimcc.st:master' ].
+
+		spec
+			package: 'Wolfram'
+			with: [ spec requires: #( 'ContainersEssentials' 'LibPoppler' ) ];
+			package: 'Wolfram-Tests'
+			with: [ spec requires: #( 'Wolfram' 'Delimcc' ) ] ]
 ]
