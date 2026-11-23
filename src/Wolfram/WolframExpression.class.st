@@ -1,3 +1,33 @@
+"
+I am an expression of the Wolfram Language: a `head`, which is a `String`, applied to `arguments`, which are expressions or Smalltalk objects that understand `putOnLink:`. I belong to a `WolframLink`, which makes me and by which the kernel evaluates me.
+
+# Evaluation
+
+- `value` evaluates me and answers the result.
+- `evaluate` answers an association from me to my value.
+- `printOn:` prints my `HoldForm`, converted by the kernel: I need an open link to be printed.
+- `asTeXifiedShape` and `asExportedPdfShape` answer a Roassal shape: the former typesets my `TeXForm` with `xelatex`, the latter asks the kernel to export a PDF file. `showPdfInsteadOfTeX` chooses the latter for `asDefaultShapeForWalker:descriptor:`.
+
+# Messages that evaluate
+
+- `+`, `-`, `*`, `/`, `**`, `&&`, `negated` and `reciprocal` make `Plus`, `Subtract`, `Times`, `Divide`, `Power`, `And`, `Minus` and `Divide`, and simplify it.
+- `simplify`, `fullSimplify`, `factor` and `factorInteger` answer the value of `Simplify`, `FullSimplify`, `Factor` and `FactorInteger`.
+- `!` applies me to its argument, with `Construct`.
+- `toString`, `textString` and `usageString` answer strings of the kernel.
+
+# Messages that only make an expression
+
+- `===` makes `Equal`, `>` makes `Greater` and `=>` makes `Implies`.
+- `<-` makes `Set`; `|->` makes `Function` with me as its variables, and `<-|` the same with me as its body.
+- `/@` makes `Map`, `@@` makes `Apply` and `@*` makes `Composition`.
+- `@` makes `Indexed` and `@!` makes `Part`.
+- `/,` makes `ReplaceAll` and `//,` makes `ReplaceRepeated`.
+- `?` makes `Information`; `info` and `infoShort` are its long and short forms.
+- `&` makes `Function` of me and gives it to a block.
+- `holdForm`, `outputForm`, `texForm`, `functionExpand`, `binomial:`, `binomialDistribution:`, `graphics2D`, `pattern:` and `valueWithArguments:`.
+
+Two expressions are equal when they have the same class, the same head and the same arguments.
+"
 Class {
 	#name : 'WolframExpression',
 	#superclass : 'Object',

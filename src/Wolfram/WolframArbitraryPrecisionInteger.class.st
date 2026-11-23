@@ -1,3 +1,6 @@
+"
+I am an integer that `WolframLink` reads from the kernel. I put myself on a link as `FromDigits` of my arguments.
+"
 Class {
 	#name : 'WolframArbitraryPrecisionInteger',
 	#superclass : 'WolframArbitraryPrecisionNumber',

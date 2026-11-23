@@ -1,3 +1,6 @@
+"
+I am the execution of a method, `compiledMethod`, on a `receiver`: `evaluate` runs it and answers its value. `executionOfSelector:` of `WolframTestCase` makes me for one of its methods.
+"
 Class {
 	#name : 'TestCaseExecution',
 	#superclass : 'Object',

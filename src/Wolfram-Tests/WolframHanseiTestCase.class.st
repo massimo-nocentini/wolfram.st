@@ -1,3 +1,6 @@
+"
+I run the models of the trait `THanseiTestCase`, of the project `Delimcc`, and a Bernoulli distribution, with symbolic probabilities: the results of the inference are Wolfram expressions.
+"
 Class {
 	#name : 'WolframHanseiTestCase',
 	#superclass : 'WolframTestCase',

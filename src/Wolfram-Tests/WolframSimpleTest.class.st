@@ -1,3 +1,6 @@
+"
+I test a Bernoulli distribution whose probability is a Wolfram symbol, on a link of `WolframEngine newLink`.
+"
 Class {
 	#name : 'WolframSimpleTest',
 	#superclass : 'TestCase',

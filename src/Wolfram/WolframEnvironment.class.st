@@ -1,3 +1,10 @@
+"
+I am an environment of the WSTP library, which the `WolframPlugin` of the virtual machine binds: `new` initializes it, and `releaseHandler` deinitializes it.
+
+`openLink` answers an activated `WolframLink`. It opens the link with the arguments of `wolframOpenStringLinkConnect`, which connect to a server already running, by TCPIP on 8081. `wolframOpenString` has the arguments that launch a kernel instead.
+
+`WolframEngine` makes an environment together with its link.
+"
 Class {
 	#name : 'WolframEnvironment',
 	#superclass : 'WolframHandleHolder',

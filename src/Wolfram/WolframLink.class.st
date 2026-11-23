@@ -1,3 +1,15 @@
+"
+I am a link of the WSTP library to a Wolfram kernel. I make the expressions, put them on the link and read the answers, by the primitives of the `WolframPlugin`. I come from `openLink` of a `WolframEnvironment` or from `WolframEngine`, and `releaseHandler` closes me.
+
+My messages that make a `WolframExpression`:
+
+- `head:arguments:`, for any head. The head is a `String`: a `Symbol` is an error.
+- `symbol:` and `number:`, which `asWolframExpression:` sends for a `Symbol` and a `Number`.
+- `%` for `Out`, `@` for `Slot`, `_` for `Blank` and `<<` for `Identity`.
+- `!` for `ToExpression`, which also evaluates it.
+
+An expression evaluates itself with the rest of my protocol: `newPacket`, `putFunction:arity:`, `putExpression:`, `endPacket`, `flush`, and `evaluate`, which reads the answer. `putExpression:` sends `putOnLink:` to its argument, which the basic classes implement: numbers, strings, symbols, booleans, associations (`Rule`), sequenceable collections (`List`) and dictionaries (`Association`).
+"
 Class {
 	#name : 'WolframLink',
 	#superclass : 'WolframHandleHolder',

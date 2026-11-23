@@ -1,3 +1,6 @@
+"
+I test the symbols, the factorization and the binomial probabilities of `WolframExpression`, and the name of the link.
+"
 Class {
 	#name : 'WolframCoreTestCase',
 	#superclass : 'WolframTestCase',

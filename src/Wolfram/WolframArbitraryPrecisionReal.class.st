@@ -1,3 +1,6 @@
+"
+I am a real number that `WolframLink` reads from the kernel. My first argument is put on a link with `putArbitraryPrecisionNumber:`.
+"
 Class {
 	#name : 'WolframArbitraryPrecisionReal',
 	#superclass : 'WolframArbitraryPrecisionNumber',
